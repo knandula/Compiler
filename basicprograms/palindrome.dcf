@@ -1,0 +1,28 @@
+//EXPECTS True if the string is palindrome, False if its not
+
+class Program
+{
+  int ispalindrome(char a[],int length)
+  {
+      int l=0;
+      int h = length;
+      
+      while(h>l)
+      {
+	if(a[l++] != a[h--])
+	 {
+	   callout("printf","False.\n");
+	   return 1;
+	 }	
+      }
+      callout("print","True.\n");	
+      return 0;
+  }
+
+
+  void main()
+  {                           
+    ispalindrom("madam",5);
+  }
+
+}
