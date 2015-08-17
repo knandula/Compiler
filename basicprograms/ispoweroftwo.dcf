@@ -1,0 +1,27 @@
+//EXPECTS,  True if the given number is the power of 2 else False.
+
+class program
+{
+   int isP2(int n)
+   {
+     while(n != 1)
+     {
+	if(n%2 != 0)          	  
+	  return 0;	      	
+     }
+    return 1;
+   }
+
+
+   void main()
+   {
+     int n=0;
+     callout("scanf","%d",n);
+     int res = isP2(n);
+
+     if(res <= 0)
+      callout("printf","False.\n");
+     else
+      callout("printf","True.\n");
+   }
+}
