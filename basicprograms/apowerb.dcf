@@ -1,0 +1,28 @@
+//EXPECTS, returns A power B for input of A and B
+
+class program
+{
+
+int power(int a, int b)
+{
+  if(b==0)
+   return 1;
+  else if (b%2 == 0)
+	return power(x,b/2) * power(x,b/2);
+  else
+      return x*power(x,b/2) * power(x,b/2);
+}
+
+void main()
+{
+   int a=0;
+   int b=0;
+   callout("scanf","%d",a);
+   callout("scanf","%d",b);
+   int p=0;
+   
+   p = power(a,b);
+
+   callout("printf"," a power b %d",p);
+}
+}
