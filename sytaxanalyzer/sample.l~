@@ -1,0 +1,16 @@
+%{
+#include<stdio.h>
+#include "y.tab.h"
+%}
+
+%%
+class					 	return CLASS;
+Program 					return PROGRAM;
+[a-zA-Z][a-zA-Z0-9]*    yylval=strdup(yytext);	return ID;
+\"						return QUOTE;
+;						return SEMICOLON;
+\{						return OB;
+\} 						return CB;
+\n				 		/*ignore EOL*/;
+[ \t]+				  	 	/* ignore whitespace */
+%%
