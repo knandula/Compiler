@@ -64,7 +64,6 @@ void yyerror(const char *s);
 %nonassoc NONEMPTYCASE
 %nonassoc NONEMPTYDEFAULT
 
-
 %start Program
 %%
 

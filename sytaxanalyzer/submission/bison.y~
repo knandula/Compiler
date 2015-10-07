@@ -275,7 +275,7 @@ Actuals:
 LValue:
   T_Identifier          {printf("IExpr");  }
 | Expr '.' T_Identifier {printf("Expr");  }
-| Expr T_Slb Expr ']'     {printf("SExpr");  }
+| Expr T_Slb Expr T_Srb     {printf("SExpr");  }
 
 ;
 
