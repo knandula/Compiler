@@ -43,5 +43,4 @@ LValue Expr
 LValue Expr
 Equal Expr
 Statement_FieldList
-classDeclClass Decl
-PROGRAM ENCOUNTERED
+""LValue Expr

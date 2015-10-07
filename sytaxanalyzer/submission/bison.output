@@ -17,8 +17,6 @@ Terminals unused in grammar
    TCLE
    TCGT
    TCGE
-   TCLP
-   TCRP
    TCOMMA
    TCDOT
 
@@ -161,7 +159,7 @@ Grammar
   103     | T_NewArray '(' Expr ',' Type ')'
   104     | LValue T_SingleEqual Expr
 
-  105 Call: T_Identifier '(' Actuals ')'
+  105 Call: T_Identifier T_Pl Actuals T_Pr
   106     | Expr '.' T_Identifier '(' Actuals ')'
 
   107 Actuals: ExprList
@@ -183,8 +181,8 @@ Terminals, with rules where they appear
 $end (0) 0
 '!' (33) 94
 '&' (38) 90
-'(' (40) 39 51 55 56 58 68 69 98 100 101 103 105 106
-')' (41) 39 51 55 56 58 68 69 98 100 101 103 105 106
+'(' (40) 39 51 55 56 58 68 69 98 100 101 103 106
+')' (41) 39 51 55 56 58 68 69 98 100 101 103 106
 ',' (44) 23 37 70 103
 '-' (45) 93
 '.' (46) 106 110
@@ -252,8 +250,8 @@ TCLT (308)
 TCLE (309)
 TCGT (310)
 TCGE (311)
-TCLP (312)
-TCRP (313)
+T_Pl (312) 105
+T_Pr (313) 105
 TCLB (314) 17 18 42 43 44 45
 TCRB (315) 17 18 42 43 44 45
 T_Srb (316) 9 111
@@ -829,10 +827,10 @@ State 45
 
 State 46
 
-  105 Call: T_Identifier . '(' Actuals ')'
+  105 Call: T_Identifier . T_Pl Actuals T_Pr
   109 LValue: T_Identifier .
 
-    '('  shift, and go to state 92
+    T_Pl  shift, and go to state 92
 
     $default  reduce using rule 109 (LValue)
 
@@ -1539,7 +1537,7 @@ State 91
 
 State 92
 
-  105 Call: T_Identifier '(' . Actuals ')'
+  105 Call: T_Identifier T_Pl . Actuals T_Pr
 
     T_Null            shift, and go to state 32
     T_This            shift, and go to state 33
@@ -2781,9 +2779,9 @@ State 147
 
 State 148
 
-  105 Call: T_Identifier '(' Actuals . ')'
+  105 Call: T_Identifier T_Pl Actuals . T_Pr
 
-    ')'  shift, and go to state 186
+    T_Pr  shift, and go to state 186
 
 
 State 149
@@ -3979,7 +3977,7 @@ State 185
 
 State 186
 
-  105 Call: T_Identifier '(' Actuals ')' .
+  105 Call: T_Identifier T_Pl Actuals T_Pr .
 
     $default  reduce using rule 105 (Call)
 

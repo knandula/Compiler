@@ -46,8 +46,8 @@ int line_num = 1;
 "Print"			 {  return T_Print;}
 "ReadInteger" 		{  return T_ReadInteger;}
 "ReadLine"		 {  return T_ReadLine;}
-\(                     {return TCLP;}
-\)                     {return TCRP;}
+\(                     {return T_Pl;}
+\)                     {return T_Pr;}
 \[                     {return T_Slb;}
 \]                     {return T_Srb;}
 \{                     {return TCLB;}

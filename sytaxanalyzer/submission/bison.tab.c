@@ -166,8 +166,8 @@ extern int yydebug;
     TCLE = 309,
     TCGT = 310,
     TCGE = 311,
-    TCLP = 312,
-    TCRP = 313,
+    T_Pl = 312,
+    T_Pr = 313,
     TCLB = 314,
     TCRB = 315,
     T_Srb = 316,
@@ -527,18 +527,18 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    72,    72,    76,    77,    81,    82,    83,    84,    88,
-      89,    93,    97,    98,    99,   100,   101,   105,   108,   109,
-     113,   114,   118,   119,   123,   124,   128,   129,   133,   137,
-     138,   139,   140,   141,   142,   146,   147,   151,   152,   156,
-     160,   164,   165,   169,   170,   171,   172,   176,   177,   181,
-     182,   186,   187,   188,   189,   190,   191,   192,   193,   194,
-     195,   199,   200,   205,   206,   210,   211,   215,   216,   220,
-     221,   225,   226,   230,   231,   232,   233,   234,   235,   236,
-     237,   238,   239,   240,   241,   242,   243,   244,   245,   246,
-     247,   248,   249,   250,   251,   252,   253,   254,   255,   256,
-     257,   258,   259,   260,   261,   262,   266,   267,   271,   272,
-     276,   277,   278,   283,   284,   285,   286,   287
+       0,    71,    71,    75,    76,    80,    81,    82,    83,    87,
+      88,    92,    96,    97,    98,    99,   100,   104,   107,   108,
+     112,   113,   117,   118,   122,   123,   127,   128,   132,   136,
+     137,   138,   139,   140,   141,   145,   146,   150,   151,   155,
+     159,   163,   164,   168,   169,   170,   171,   175,   176,   180,
+     181,   185,   186,   187,   188,   189,   190,   191,   192,   193,
+     194,   198,   199,   204,   205,   209,   210,   214,   215,   219,
+     220,   224,   225,   229,   230,   231,   232,   233,   234,   235,
+     236,   237,   238,   239,   240,   241,   242,   243,   244,   245,
+     246,   247,   248,   249,   250,   251,   252,   253,   254,   255,
+     256,   257,   258,   259,   260,   261,   265,   266,   270,   271,
+     275,   276,   277,   282,   283,   284,   285,   286
 };
 #endif
 
@@ -556,7 +556,7 @@ static const char *const yytname[] =
   "T_ReadLine", "T_Switch", "T_Case", "T_Default", "T_Incr", "T_Decr",
   "CLASS", "PROGRAM", "CALLOUT", "VOID", "TRUE", "FALSE", "DECIMAL",
   "T_Semicolon", "END", "ENDL", "TCASSIGNMENT", "TCEQ", "TCNE", "TCLT",
-  "TCLE", "TCGT", "TCGE", "TCLP", "TCRP", "TCLB", "TCRB", "T_Srb", "T_Slb",
+  "TCLE", "TCGT", "TCGE", "T_Pl", "T_Pr", "TCLB", "TCRB", "T_Srb", "T_Slb",
   "TCOMMA", "TCDOT", "T_Add", "T_Sub", "T_Mul", "T_Div", "T_Mod",
   "T_Identifier", "T_StringConstant", "T_IntConstant", "T_DoubleConstant",
   "T_BoolConstant", "'&'", "'^'", "'|'", "'<'", "'>'", "NEG", "'!'", "'~'",
@@ -608,23 +608,23 @@ static const yytype_int16 yypact[] =
     -122,  -122,   -15,   -34,  -122,  -122,  -122,   -14,    31,   -37,
     -122,  -122,  -122,   -13,   -35,   145,  -122,    -8,    40,     9,
        5,    69,  -122,  -122,   -23,     8,    10,   902,     6,    -2,
-      11,    13,    15,    17,    20,  -122,    24,  -122,  -122,  -122,
+      11,    13,    15,    17,    20,  -122,    45,  -122,  -122,  -122,
     -122,   113,   113,   113,   113,  -122,    -1,  -122,   734,   218,
-    -122,    55,  -122,  1114,  -122,   105,  -122,  -122,    50,    63,
+    -122,    70,  -122,  1114,  -122,   105,  -122,  -122,    50,    63,
     -122,    54,  -122,    33,    14,    80,  -122,    37,    39,   113,
      113,   113,  -122,   584,  -122,  -122,  -122,   113,   113,    41,
       42,   113,   113,   -53,   -53,   401,   -53,  -122,  -122,  -122,
     -122,  -122,   751,  -122,   113,   113,   113,   113,   113,   113,
      113,   113,  -122,  -122,   113,   113,   113,   113,   113,   113,
      113,   113,   113,   113,   113,    59,   113,  -122,    44,   291,
-     -35,  -122,  -122,  -122,  -122,  -122,    69,   476,    45,   509,
-    -122,   668,   -61,  1114,  -122,  -122,   551,    49,    46,  -122,
+     -35,  -122,  -122,  -122,  -122,  -122,    69,   476,    46,   509,
+    -122,   668,   -61,  1114,  -122,  -122,   551,    48,    81,  -122,
     -122,   192,   192,  1189,  1189,   338,   338,  1081,   270,  1039,
       47,    47,   -16,   -16,   -16,  1156,  1156,  1156,   192,   192,
-      48,  1114,    72,  -122,  -122,  -122,   364,  -122,  -122,  1002,
+      49,  1114,    71,  -122,  -122,  -122,   364,  -122,  -122,  1002,
      113,  1002,    69,   113,    73,    65,  -122,  -122,   113,  -122,
-    -122,  -122,  -122,  -122,  -122,   626,   112,    74,  1114,  -122,
-     131,    78,   113,  1002,  -122,   109,    12,  -122,  -122,    88,
+    -122,  -122,  -122,  -122,  -122,   626,   140,    74,  1114,  -122,
+     104,    78,   113,  1002,  -122,   109,    12,  -122,  -122,    88,
     -122,    93,    94,  -122,    99,  1002,   824,   856,  -122,  -122,
      824,   929
 };
@@ -692,13 +692,13 @@ static const yytype_int16 yytable[] =
       79,   177,     1,     2,     3,     4,     5,   151,   152,   153,
      154,   155,   156,   157,   158,   112,   113,   159,   160,   161,
      162,   163,   164,   165,   166,   167,   168,   169,    84,   171,
-      70,    80,   103,    81,    87,   132,    88,   174,    89,   114,
-      90,   178,    56,    91,   117,   118,   119,    92,   193,   126,
+      70,    80,    92,    81,    87,   132,    88,   174,    89,   114,
+      90,   178,    56,    91,   117,   118,   119,   103,   193,   126,
      127,   194,   129,   196,   130,   131,   209,   134,   136,   170,
-     125,   135,    32,   172,    33,   144,   145,   180,   183,   203,
-     186,   188,   189,    39,    40,   210,    42,    43,     1,     2,
+     125,   135,    32,   172,    33,   144,   145,   183,   180,   186,
+     205,   189,   188,    39,    40,   210,    42,    43,     1,     2,
        3,     4,     5,   195,   191,   200,   198,   219,   197,   220,
-     221,   143,    99,    99,    32,   199,    33,   205,   204,    34,
+     221,   143,    99,    99,    32,   199,    33,   203,   204,    34,
       35,    36,   208,    37,    38,    39,    40,    41,    42,    43,
       44,   211,   215,    46,    47,    48,    49,    50,   216,   217,
      218,    21,   133,    26,    51,    52,   213,     0,   142,     0,
@@ -824,13 +824,13 @@ static const yytype_int16 yycheck[] =
       93,   129,     3,     4,     5,     6,     7,   104,   105,   106,
      107,   108,   109,   110,   111,    38,    39,   114,   115,   116,
      117,   118,   119,   120,   121,   122,   123,   124,    92,   126,
-      91,    93,    47,    93,    93,    91,    93,   129,    93,    62,
-      93,   136,   136,    93,    67,    68,    69,    93,   176,    14,
+      91,    93,    57,    93,    93,    91,    93,   129,    93,    62,
+      93,   136,   136,    93,    67,    68,    69,    47,   176,    14,
       70,   179,    59,   181,    70,    92,   202,    47,    89,    70,
-      83,    94,    19,    89,    21,    94,    94,    92,    89,    27,
-      94,    93,    70,    30,    31,   203,    33,    34,     3,     4,
+      83,    94,    19,    89,    21,    94,    94,    89,    92,    58,
+      36,    70,    93,    30,    31,   203,    33,    34,     3,     4,
        5,     6,     7,   180,   176,    90,   183,   215,   182,   216,
-     217,   188,   220,   221,    19,    92,    21,    36,    94,    24,
+     217,   188,   220,   221,    19,    92,    21,    27,    94,    24,
       25,    26,    94,    28,    29,    30,    31,    32,    33,    34,
       35,    72,    94,    70,    71,    72,    73,    74,    95,    95,
       91,     9,    74,    17,    81,    82,   206,    -1,    88,    -1,
@@ -957,7 +957,7 @@ static const yytype_uint8 yystos[] =
      120,   121,   125,   127,   128,   130,   131,    70,    23,   107,
       91,   103,   114,   115,   116,    61,   102,   112,   113,    93,
       93,    93,    92,   127,    92,    70,   104,    93,    93,    93,
-      93,    93,    93,   127,   127,   127,   127,    70,    60,   120,
+      93,    93,    57,   127,   127,   127,   127,    70,    60,   120,
       60,   101,   118,    47,     9,    10,    11,    12,    15,    16,
       17,    18,    38,    39,    62,    65,    66,    67,    68,    69,
       75,    76,    77,    78,    79,    83,    14,    70,   108,    59,
@@ -966,7 +966,7 @@ static const yytype_uint8 yystos[] =
       60,   127,   127,   127,   127,   127,   127,   127,   127,   127,
      127,   127,   127,   127,   127,   127,   127,   127,   127,   127,
       70,   127,    89,    60,   101,   110,   111,   120,   102,    94,
-      92,    94,    89,    89,    94,    94,    94,    61,    93,    70,
+      92,    94,    89,    89,    94,    94,    58,    61,    93,    70,
       60,   101,   110,   120,   120,   127,   120,   103,   127,    92,
       90,   129,    92,    27,    94,    36,   122,   123,    94,   121,
      120,    72,    37,   123,   124,    94,    95,    95,    91,   120,
@@ -1681,697 +1681,697 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 72 "bison.y" /* yacc.c:1646  */
+#line 71 "bison.y" /* yacc.c:1646  */
     { fprintf(yyout, "PROGRAM ENCOUNTERED" ); }
 #line 1687 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 76 "bison.y" /* yacc.c:1646  */
+#line 75 "bison.y" /* yacc.c:1646  */
     { fprintf(yyout, "DeclList"); }
 #line 1693 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 77 "bison.y" /* yacc.c:1646  */
+#line 76 "bison.y" /* yacc.c:1646  */
     {  }
 #line 1699 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 81 "bison.y" /* yacc.c:1646  */
+#line 80 "bison.y" /* yacc.c:1646  */
     { fprintf(yyout,"Class Decl\n"); }
 #line 1705 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 82 "bison.y" /* yacc.c:1646  */
+#line 81 "bison.y" /* yacc.c:1646  */
     { fprintf(yyout,"Var Decl\n"); }
 #line 1711 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 83 "bison.y" /* yacc.c:1646  */
+#line 82 "bison.y" /* yacc.c:1646  */
     { fprintf(yyout,"intf decl\n");}
 #line 1717 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 84 "bison.y" /* yacc.c:1646  */
+#line 83 "bison.y" /* yacc.c:1646  */
     { fprintf(yyout,"Fn Decl\n");}
 #line 1723 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 88 "bison.y" /* yacc.c:1646  */
+#line 87 "bison.y" /* yacc.c:1646  */
     { fprintf(yyout,"VarDecl\n"); }
 #line 1729 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 89 "bison.y" /* yacc.c:1646  */
+#line 88 "bison.y" /* yacc.c:1646  */
     { fprintf(yyout,"VarDecl with size\n"); }
 #line 1735 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 93 "bison.y" /* yacc.c:1646  */
+#line 92 "bison.y" /* yacc.c:1646  */
     {    fprintf(yyout,"Variable\n "); }
 #line 1741 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 97 "bison.y" /* yacc.c:1646  */
+#line 96 "bison.y" /* yacc.c:1646  */
     {  fprintf(yyout,"void");  }
 #line 1747 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 98 "bison.y" /* yacc.c:1646  */
+#line 97 "bison.y" /* yacc.c:1646  */
     {  fprintf(yyout,"bool");  }
 #line 1753 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 99 "bison.y" /* yacc.c:1646  */
+#line 98 "bison.y" /* yacc.c:1646  */
     {  fprintf(yyout,"int\n");  }
 #line 1759 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 100 "bison.y" /* yacc.c:1646  */
+#line 99 "bison.y" /* yacc.c:1646  */
     {  fprintf(yyout,"double");  }
 #line 1765 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 101 "bison.y" /* yacc.c:1646  */
+#line 100 "bison.y" /* yacc.c:1646  */
     { fprintf(yyout,"string");  }
 #line 1771 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 105 "bison.y" /* yacc.c:1646  */
+#line 104 "bison.y" /* yacc.c:1646  */
     {    printf("NamedType");  }
 #line 1777 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 108 "bison.y" /* yacc.c:1646  */
+#line 107 "bison.y" /* yacc.c:1646  */
     { fprintf(yyout,"classDecl");    }
 #line 1783 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 109 "bison.y" /* yacc.c:1646  */
+#line 108 "bison.y" /* yacc.c:1646  */
     { fprintf(yyout,"classDecl");}
 #line 1789 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 113 "bison.y" /* yacc.c:1646  */
+#line 112 "bison.y" /* yacc.c:1646  */
     { fprintf(yyout,"T_Extends\n");   }
 #line 1795 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 114 "bison.y" /* yacc.c:1646  */
+#line 113 "bison.y" /* yacc.c:1646  */
     { fprintf(yyout,"Empty\n");  }
 #line 1801 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 118 "bison.y" /* yacc.c:1646  */
+#line 117 "bison.y" /* yacc.c:1646  */
     {   printf("T_Implements");   }
 #line 1807 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 119 "bison.y" /* yacc.c:1646  */
+#line 118 "bison.y" /* yacc.c:1646  */
     { }
 #line 1813 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 123 "bison.y" /* yacc.c:1646  */
+#line 122 "bison.y" /* yacc.c:1646  */
     { printf("ImplementsTypeList");  }
 #line 1819 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 124 "bison.y" /* yacc.c:1646  */
+#line 123 "bison.y" /* yacc.c:1646  */
     { printf("T_Identifier"); }
 #line 1825 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 128 "bison.y" /* yacc.c:1646  */
+#line 127 "bison.y" /* yacc.c:1646  */
     {  printf("T_Interface");   }
 #line 1831 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 129 "bison.y" /* yacc.c:1646  */
+#line 128 "bison.y" /* yacc.c:1646  */
     {  printf("T_Interface");    }
 #line 1837 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 133 "bison.y" /* yacc.c:1646  */
+#line 132 "bison.y" /* yacc.c:1646  */
     {  printf("T_FnDef");    }
 #line 1843 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 137 "bison.y" /* yacc.c:1646  */
+#line 136 "bison.y" /* yacc.c:1646  */
     {  fprintf(yyout,"Var_FieldList\n");  }
 #line 1849 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 138 "bison.y" /* yacc.c:1646  */
+#line 137 "bison.y" /* yacc.c:1646  */
     {  fprintf(yyout,"Fn_FieldList\n"); }
 #line 1855 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 139 "bison.y" /* yacc.c:1646  */
+#line 138 "bison.y" /* yacc.c:1646  */
     {  fprintf(yyout,"Statement_FieldList\n"); }
 #line 1861 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 140 "bison.y" /* yacc.c:1646  */
+#line 139 "bison.y" /* yacc.c:1646  */
     {  fprintf(yyout,"T_VarDecl\n");  }
 #line 1867 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 141 "bison.y" /* yacc.c:1646  */
+#line 140 "bison.y" /* yacc.c:1646  */
     {  fprintf(yyout,"T_FnDecl\n");  }
 #line 1873 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 142 "bison.y" /* yacc.c:1646  */
+#line 141 "bison.y" /* yacc.c:1646  */
     {  fprintf(yyout,"T_StmntDecl\n");  }
 #line 1879 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 146 "bison.y" /* yacc.c:1646  */
+#line 145 "bison.y" /* yacc.c:1646  */
     { printf("FormalsList");   }
 #line 1885 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 147 "bison.y" /* yacc.c:1646  */
+#line 146 "bison.y" /* yacc.c:1646  */
     { }
 #line 1891 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 151 "bison.y" /* yacc.c:1646  */
+#line 150 "bison.y" /* yacc.c:1646  */
     {  printf("FormalsList Variable");  }
 #line 1897 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 152 "bison.y" /* yacc.c:1646  */
+#line 151 "bison.y" /* yacc.c:1646  */
     { printf("FormalsList Variable , variable");    }
 #line 1903 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 156 "bison.y" /* yacc.c:1646  */
+#line 155 "bison.y" /* yacc.c:1646  */
     { printf("FnDef ;");}
 #line 1909 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 160 "bison.y" /* yacc.c:1646  */
+#line 159 "bison.y" /* yacc.c:1646  */
     {  printf("type T_Identifier ;");  }
 #line 1915 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 164 "bison.y" /* yacc.c:1646  */
+#line 163 "bison.y" /* yacc.c:1646  */
     { printf("PrototypeList Prototype");   }
 #line 1921 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 165 "bison.y" /* yacc.c:1646  */
+#line 164 "bison.y" /* yacc.c:1646  */
     { printf("Prototype");  }
 #line 1927 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 169 "bison.y" /* yacc.c:1646  */
+#line 168 "bison.y" /* yacc.c:1646  */
     {printf("VarDeclList StmtList ");   }
 #line 1933 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 170 "bison.y" /* yacc.c:1646  */
+#line 169 "bison.y" /* yacc.c:1646  */
     {printf("VarDeclList  ");  }
 #line 1939 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 171 "bison.y" /* yacc.c:1646  */
+#line 170 "bison.y" /* yacc.c:1646  */
     { printf(" StmtList ");  }
 #line 1945 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 172 "bison.y" /* yacc.c:1646  */
+#line 171 "bison.y" /* yacc.c:1646  */
     {printf(" {} ");   }
 #line 1951 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 176 "bison.y" /* yacc.c:1646  */
+#line 175 "bison.y" /* yacc.c:1646  */
     { printf("  StmtList Stmt   ");  }
 #line 1957 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 177 "bison.y" /* yacc.c:1646  */
+#line 176 "bison.y" /* yacc.c:1646  */
     { printf("   Stmt   "); }
 #line 1963 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 181 "bison.y" /* yacc.c:1646  */
+#line 180 "bison.y" /* yacc.c:1646  */
     {  printf("    VarDeclList VarDecl     "); }
 #line 1969 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 182 "bison.y" /* yacc.c:1646  */
+#line 181 "bison.y" /* yacc.c:1646  */
     {  printf("     VarDecl     "); }
 #line 1975 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 186 "bison.y" /* yacc.c:1646  */
+#line 185 "bison.y" /* yacc.c:1646  */
     {   printf("OptExpr ;");   }
 #line 1981 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 187 "bison.y" /* yacc.c:1646  */
+#line 186 "bison.y" /* yacc.c:1646  */
     { printf("T_While ;");   }
 #line 1987 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 188 "bison.y" /* yacc.c:1646  */
+#line 187 "bison.y" /* yacc.c:1646  */
     {printf("T_While ;"); }
 #line 1993 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 189 "bison.y" /* yacc.c:1646  */
+#line 188 "bison.y" /* yacc.c:1646  */
     { printf("T_Return ;");  }
 #line 1999 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 190 "bison.y" /* yacc.c:1646  */
+#line 189 "bison.y" /* yacc.c:1646  */
     {printf("T_Break ;");  }
 #line 2005 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 191 "bison.y" /* yacc.c:1646  */
+#line 190 "bison.y" /* yacc.c:1646  */
     { printf("T_Print ;");  }
 #line 2011 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 192 "bison.y" /* yacc.c:1646  */
+#line 191 "bison.y" /* yacc.c:1646  */
     { printf("T_For ;");   }
 #line 2017 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 193 "bison.y" /* yacc.c:1646  */
+#line 192 "bison.y" /* yacc.c:1646  */
     {printf("T_IfStmt ;");  }
 #line 2023 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 194 "bison.y" /* yacc.c:1646  */
+#line 193 "bison.y" /* yacc.c:1646  */
     {printf("T_Switch ;");   }
 #line 2029 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 195 "bison.y" /* yacc.c:1646  */
+#line 194 "bison.y" /* yacc.c:1646  */
     {printf("T_StmtBlock ;");  }
 #line 2035 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 199 "bison.y" /* yacc.c:1646  */
+#line 198 "bison.y" /* yacc.c:1646  */
     {printf("OptExpr");  }
 #line 2041 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 200 "bison.y" /* yacc.c:1646  */
+#line 199 "bison.y" /* yacc.c:1646  */
     { printf("OptExpr");  }
 #line 2047 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 205 "bison.y" /* yacc.c:1646  */
+#line 204 "bison.y" /* yacc.c:1646  */
     { printf("CaseStmtList");  }
 #line 2053 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 206 "bison.y" /* yacc.c:1646  */
+#line 205 "bison.y" /* yacc.c:1646  */
     { printf("CaseStmtList");  }
 #line 2059 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 210 "bison.y" /* yacc.c:1646  */
+#line 209 "bison.y" /* yacc.c:1646  */
     { printf("T_Case T_IntConstant");  }
 #line 2065 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 211 "bison.y" /* yacc.c:1646  */
+#line 210 "bison.y" /* yacc.c:1646  */
     {  printf(" T_IntConstant");  }
 #line 2071 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 215 "bison.y" /* yacc.c:1646  */
+#line 214 "bison.y" /* yacc.c:1646  */
     {printf("T_Default");  }
 #line 2077 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 216 "bison.y" /* yacc.c:1646  */
+#line 215 "bison.y" /* yacc.c:1646  */
     { printf("T_Default");  }
 #line 2083 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 220 "bison.y" /* yacc.c:1646  */
+#line 219 "bison.y" /* yacc.c:1646  */
     { printf(" T_If");  }
 #line 2089 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 221 "bison.y" /* yacc.c:1646  */
+#line 220 "bison.y" /* yacc.c:1646  */
     { printf(" T_If");  }
 #line 2095 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 71:
-#line 225 "bison.y" /* yacc.c:1646  */
+#line 224 "bison.y" /* yacc.c:1646  */
     { printf("ExprList"); }
 #line 2101 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 72:
-#line 226 "bison.y" /* yacc.c:1646  */
+#line 225 "bison.y" /* yacc.c:1646  */
     { printf("ExprList"); }
 #line 2107 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 73:
-#line 230 "bison.y" /* yacc.c:1646  */
+#line 229 "bison.y" /* yacc.c:1646  */
     { fprintf(yyout,"LValue Expr\n"); }
 #line 2113 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 74:
-#line 231 "bison.y" /* yacc.c:1646  */
-    { printf("Expr"); }
+#line 230 "bison.y" /* yacc.c:1646  */
+    { fprintf(yyout,"CallExpr\n"); }
 #line 2119 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 75:
-#line 232 "bison.y" /* yacc.c:1646  */
+#line 231 "bison.y" /* yacc.c:1646  */
     {printf("Expr"); }
 #line 2125 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 76:
-#line 233 "bison.y" /* yacc.c:1646  */
+#line 232 "bison.y" /* yacc.c:1646  */
     {    printf("Expr");  }
 #line 2131 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 234 "bison.y" /* yacc.c:1646  */
+#line 233 "bison.y" /* yacc.c:1646  */
     { printf("Expr");  }
 #line 2137 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 235 "bison.y" /* yacc.c:1646  */
+#line 234 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2143 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 79:
-#line 236 "bison.y" /* yacc.c:1646  */
+#line 235 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2149 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 80:
-#line 237 "bison.y" /* yacc.c:1646  */
+#line 236 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2155 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 81:
-#line 238 "bison.y" /* yacc.c:1646  */
+#line 237 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2161 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 82:
-#line 239 "bison.y" /* yacc.c:1646  */
+#line 238 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2167 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 83:
-#line 240 "bison.y" /* yacc.c:1646  */
+#line 239 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2173 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 84:
-#line 241 "bison.y" /* yacc.c:1646  */
+#line 240 "bison.y" /* yacc.c:1646  */
     {printf("Add Expr");  }
 #line 2179 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 85:
-#line 242 "bison.y" /* yacc.c:1646  */
+#line 241 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2185 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 86:
-#line 243 "bison.y" /* yacc.c:1646  */
+#line 242 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2191 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 87:
-#line 244 "bison.y" /* yacc.c:1646  */
+#line 243 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2197 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 88:
-#line 245 "bison.y" /* yacc.c:1646  */
+#line 244 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2203 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 89:
-#line 246 "bison.y" /* yacc.c:1646  */
+#line 245 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2209 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 90:
-#line 247 "bison.y" /* yacc.c:1646  */
+#line 246 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2215 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 91:
-#line 248 "bison.y" /* yacc.c:1646  */
+#line 247 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2221 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 92:
-#line 249 "bison.y" /* yacc.c:1646  */
+#line 248 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2227 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 93:
-#line 250 "bison.y" /* yacc.c:1646  */
+#line 249 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2233 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 94:
-#line 251 "bison.y" /* yacc.c:1646  */
+#line 250 "bison.y" /* yacc.c:1646  */
     {printf(" -");  }
 #line 2239 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 95:
-#line 252 "bison.y" /* yacc.c:1646  */
+#line 251 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2245 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 96:
-#line 253 "bison.y" /* yacc.c:1646  */
+#line 252 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2251 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 97:
-#line 254 "bison.y" /* yacc.c:1646  */
+#line 253 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2257 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 98:
-#line 255 "bison.y" /* yacc.c:1646  */
+#line 254 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2263 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 99:
-#line 256 "bison.y" /* yacc.c:1646  */
+#line 255 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2269 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 100:
-#line 257 "bison.y" /* yacc.c:1646  */
+#line 256 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2275 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 101:
-#line 258 "bison.y" /* yacc.c:1646  */
+#line 257 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2281 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 102:
-#line 259 "bison.y" /* yacc.c:1646  */
+#line 258 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2287 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 103:
-#line 260 "bison.y" /* yacc.c:1646  */
+#line 259 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2293 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 104:
-#line 261 "bison.y" /* yacc.c:1646  */
+#line 260 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2299 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 105:
-#line 262 "bison.y" /* yacc.c:1646  */
+#line 261 "bison.y" /* yacc.c:1646  */
     {fprintf(yyout,"Equal Expr\n");  }
 #line 2305 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 106:
-#line 266 "bison.y" /* yacc.c:1646  */
-    {printf("Call");  }
+#line 265 "bison.y" /* yacc.c:1646  */
+    { fprintf(yyout,"Call");  }
 #line 2311 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 107:
-#line 267 "bison.y" /* yacc.c:1646  */
-    {printf("Call");  }
+#line 266 "bison.y" /* yacc.c:1646  */
+    {fprintf(yyout,"Call");  }
 #line 2317 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 108:
-#line 271 "bison.y" /* yacc.c:1646  */
+#line 270 "bison.y" /* yacc.c:1646  */
     {printf("ExprList");  }
 #line 2323 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 109:
-#line 272 "bison.y" /* yacc.c:1646  */
+#line 271 "bison.y" /* yacc.c:1646  */
     {printf("ExprList");  }
 #line 2329 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 110:
-#line 276 "bison.y" /* yacc.c:1646  */
+#line 275 "bison.y" /* yacc.c:1646  */
     {printf("IExpr");  }
 #line 2335 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 111:
-#line 277 "bison.y" /* yacc.c:1646  */
+#line 276 "bison.y" /* yacc.c:1646  */
     {printf("Expr");  }
 #line 2341 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 112:
-#line 278 "bison.y" /* yacc.c:1646  */
+#line 277 "bison.y" /* yacc.c:1646  */
     {printf("SExpr");  }
 #line 2347 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 113:
-#line 283 "bison.y" /* yacc.c:1646  */
+#line 282 "bison.y" /* yacc.c:1646  */
     {printf("T_IntConstant   ");  }
 #line 2353 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 114:
-#line 284 "bison.y" /* yacc.c:1646  */
+#line 283 "bison.y" /* yacc.c:1646  */
     {printf("T_DoubleConstant ");  }
 #line 2359 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 115:
-#line 285 "bison.y" /* yacc.c:1646  */
+#line 284 "bison.y" /* yacc.c:1646  */
     {printf("T_BoolConstant");  }
 #line 2365 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 116:
-#line 286 "bison.y" /* yacc.c:1646  */
+#line 285 "bison.y" /* yacc.c:1646  */
     {printf("T_StringConstant");  }
 #line 2371 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 117:
-#line 287 "bison.y" /* yacc.c:1646  */
+#line 286 "bison.y" /* yacc.c:1646  */
     {printf("T_Null ");  }
 #line 2377 "bison.tab.c" /* yacc.c:1646  */
     break;
@@ -2605,7 +2605,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 289 "bison.y" /* yacc.c:1906  */
+#line 288 "bison.y" /* yacc.c:1906  */
 
 
 int main(int argc,char* argv[]) {

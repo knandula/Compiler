@@ -1034,12 +1034,12 @@ YY_RULE_SETUP
 case 38:
 YY_RULE_SETUP
 #line 49 "fx.l"
-{return TCLP;}
+{return T_Pl;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
 #line 50 "fx.l"
-{return TCRP;}
+{return T_Pr;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP

@@ -35,7 +35,7 @@ void yyerror(const char *s);
 %token CLASS PROGRAM CALLOUT  VOID TRUE FALSE DECIMAL T_Semicolon 
 %token  END ENDL
 %token  TCASSIGNMENT TCEQ TCNE TCLT TCLE TCGT TCGE 
-%token  TCLP TCRP TCLB TCRB T_Srb T_Slb TCOMMA TCDOT 
+%token  T_Pl T_Pr TCLB TCRB T_Srb T_Slb TCOMMA TCDOT 
 %token  T_Add T_Sub T_Mul T_Div T_Mod
 
 %token <identifier> T_Identifier
@@ -227,7 +227,7 @@ ExprList:
 
 Expr:
   LValue                   { fprintf(yyout,"LValue Expr\n"); }
-| Call                     { printf("Expr"); }
+| Call                     { fprintf(yyout,"CallExpr\n"); }
 | Constant                 {printf("Expr"); }
 | Expr T_Or Expr	   {    printf("Expr");  }
 | Expr T_And Expr { printf("Expr");  }
@@ -262,8 +262,8 @@ Expr:
 ;
 
 Call:
-  T_Identifier '(' Actuals ')' {printf("Call");  }
-| Expr '.' T_Identifier '(' Actuals ')' {printf("Call");  }
+  T_Identifier T_Pl Actuals T_Pr { fprintf(yyout,"Call");  }
+| Expr '.' T_Identifier '(' Actuals ')' {fprintf(yyout,"Call");  }
 ;
 
 Actuals:
