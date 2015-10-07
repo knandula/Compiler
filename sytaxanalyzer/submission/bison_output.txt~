@@ -57,7 +57,7 @@ SExprIExprLValue
 OptExpr
 ""IExprLValue
 IExprLValue
-Callout argssubCallOut argsCallOutCall
+CallOutCall
 OptExpr
 classDeclClass Decl
 PROGRAM ENCOUNTERED

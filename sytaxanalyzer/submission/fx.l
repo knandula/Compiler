@@ -54,7 +54,7 @@ int line_num = 1;
 \{                       {return TCLB;}
 \}                       {return TCRB;}
 \.                       {return TCDOT;}
-\,                       {return TCOMMA;}
+\,                       {return T_Comma;}
 \;                       {return T_Semicolon;}
 \+                       {return T_Add;}
 \%                       { return T_Mod; }

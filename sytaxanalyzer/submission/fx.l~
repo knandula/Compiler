@@ -26,7 +26,7 @@ int line_num = 1;
 "double"		 {  return T_Double;}
 "boolean"		 {  return T_Bool;}
 "string" 		 {  return T_String;}
-"callout"		 {  return T_Call}
+"callout"		 {  return T_Call;}
 "class"			 {  return T_Class;}
 "null" 			 {  return T_Null;}
 "while" 	  	 {  return T_While;}
@@ -54,7 +54,7 @@ int line_num = 1;
 \{                       {return TCLB;}
 \}                       {return TCRB;}
 \.                       {return TCDOT;}
-\,                       {return TCOMMA;}
+\,                       {return T_Comma;}
 \;                       {return T_Semicolon;}
 \+                       {return T_Add;}
 \%                       { return T_Mod; }

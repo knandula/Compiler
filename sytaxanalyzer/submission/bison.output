@@ -16,7 +16,6 @@ Terminals unused in grammar
    TCLE
    TCGT
    TCGE
-   TCOMMA
    TCDOT
 
 
@@ -160,21 +159,27 @@ Grammar
   105     | LValue T_SingleEqual Expr
 
   106 Call: T_Identifier T_Pl Actuals T_Pr
-  107     | T_Call T_Pl Actuals T_Pr
+  107     | T_Call T_Pl Expr callout_args T_Pr
   108     | Expr '.' T_Identifier '(' Actuals ')'
 
-  109 Actuals: ExprList
-  110        | %empty
+  109 callout_args: %empty
+  110             | callout_args T_Comma callout_args_sub
 
-  111 LValue: T_Identifier
-  112       | Expr '.' T_Identifier
-  113       | Expr T_Slb Expr T_Srb
+  111 callout_args_sub: %empty
+  112                 | Expr
 
-  114 Constant: T_IntConstant
-  115         | T_DoubleConstant
-  116         | T_BoolConstant
-  117         | T_StringConstant
-  118         | T_Null
+  113 Actuals: ExprList
+  114        | %empty
+
+  115 LValue: T_Identifier
+  116       | Expr '.' T_Identifier
+  117       | Expr T_Slb Expr T_Srb
+
+  118 Constant: T_IntConstant
+  119         | T_DoubleConstant
+  120         | T_BoolConstant
+  121         | T_StringConstant
+  122         | T_Null
 
 
 Terminals, with rules where they appear
@@ -187,7 +192,7 @@ $end (0) 0
 ')' (41) 39 51 55 56 58 68 69 98 101 102 104 108
 ',' (44) 23 37 70 104
 '-' (45) 93
-'.' (46) 108 112
+'.' (46) 108 116
 ':' (58) 64 65 66 67
 ';' (59) 38 52 53 54 55 56
 '<' (60) 77
@@ -214,7 +219,7 @@ T_LeftShift (270) 91
 T_RightShift (271) 92
 T_And (272) 76
 T_Or (273) 75
-T_Null (274) 118
+T_Null (274) 122
 T_Extends (275) 19
 T_This (276) 100
 T_Interface (277) 25 26
@@ -256,20 +261,20 @@ T_Pl (312) 106 107
 T_Pr (313) 106 107
 TCLB (314) 17 18 42 43 44 45
 TCRB (315) 17 18 42 43 44 45
-T_Srb (316) 9 113
-T_Slb (317) 9 113
-TCOMMA (318)
+T_Srb (316) 9 117
+T_Slb (317) 9 117
+T_Comma (318) 110
 TCDOT (319)
 T_Add (320) 83
 T_Sub (321) 84
 T_Mul (322) 85
 T_Div (323) 86
 T_Mod (324) 87
-T_Identifier (325) 10 16 17 18 19 23 24 25 26 39 106 108 111 112
-T_StringConstant (326) 117
-T_IntConstant (327) 9 65 114
-T_DoubleConstant (328) 115
-T_BoolConstant (329) 116
+T_Identifier (325) 10 16 17 18 19 23 24 25 26 39 106 108 115 116
+T_StringConstant (326) 121
+T_IntConstant (327) 9 65 118
+T_DoubleConstant (328) 119
+T_BoolConstant (329) 120
 NEG (330)
 NOELSE (331)
 EMPTYCASE (332)
@@ -340,20 +345,25 @@ DefaultStmt (125)
 IfStmt (126)
     on left: 68 69, on right: 57
 ExprList (127)
-    on left: 70 71, on right: 55 70 109
+    on left: 70 71, on right: 55 70 113
 Expr (128)
     on left: 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89
     90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105, on right:
     51 53 56 58 60 68 69 70 71 75 76 77 78 79 80 81 82 83 84 85 86
-    87 88 89 90 91 92 93 94 95 96 97 98 99 104 105 108 112 113
+    87 88 89 90 91 92 93 94 95 96 97 98 99 104 105 107 108 112 116
+    117
 Call (129)
     on left: 106 107 108, on right: 73
-Actuals (130)
-    on left: 109 110, on right: 106 107 108
-LValue (131)
-    on left: 111 112 113, on right: 72 105
-Constant (132)
-    on left: 114 115 116 117 118, on right: 74
+callout_args (130)
+    on left: 109 110, on right: 107 110
+callout_args_sub (131)
+    on left: 111 112, on right: 110
+Actuals (132)
+    on left: 113 114, on right: 106 108
+LValue (133)
+    on left: 115 116 117, on right: 72 105
+Constant (134)
+    on left: 118 119 120 121 122, on right: 74
 
 
 State 0
@@ -709,9 +719,9 @@ State 31
 
 State 32
 
-  118 Constant: T_Null .
+  122 Constant: T_Null .
 
-    $default  reduce using rule 118 (Constant)
+    $default  reduce using rule 122 (Constant)
 
 
 State 33
@@ -826,7 +836,7 @@ State 44
 
 State 45
 
-  107 Call: T_Call . T_Pl Actuals T_Pr
+  107 Call: T_Call . T_Pl Expr callout_args T_Pr
 
     T_Pl  shift, and go to state 94
 
@@ -841,39 +851,39 @@ State 46
 State 47
 
   106 Call: T_Identifier . T_Pl Actuals T_Pr
-  111 LValue: T_Identifier .
+  115 LValue: T_Identifier .
 
     T_Pl  shift, and go to state 95
 
-    $default  reduce using rule 111 (LValue)
+    $default  reduce using rule 115 (LValue)
 
 
 State 48
 
-  117 Constant: T_StringConstant .
+  121 Constant: T_StringConstant .
 
-    $default  reduce using rule 117 (Constant)
+    $default  reduce using rule 121 (Constant)
 
 
 State 49
 
-  114 Constant: T_IntConstant .
+  118 Constant: T_IntConstant .
 
-    $default  reduce using rule 114 (Constant)
+    $default  reduce using rule 118 (Constant)
 
 
 State 50
 
-  115 Constant: T_DoubleConstant .
+  119 Constant: T_DoubleConstant .
 
-    $default  reduce using rule 115 (Constant)
+    $default  reduce using rule 119 (Constant)
 
 
 State 51
 
-  116 Constant: T_BoolConstant .
+  120 Constant: T_BoolConstant .
 
-    $default  reduce using rule 116 (Constant)
+    $default  reduce using rule 120 (Constant)
 
 
 State 52
@@ -1180,8 +1190,8 @@ State 65
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -1452,8 +1462,8 @@ State 85
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -1602,7 +1612,7 @@ State 93
 
 State 94
 
-  107 Call: T_Call T_Pl . Actuals T_Pr
+  107 Call: T_Call T_Pl . Expr callout_args T_Pr
 
     T_Null            shift, and go to state 32
     T_This            shift, and go to state 33
@@ -1622,12 +1632,8 @@ State 94
     '-'               shift, and go to state 55
     '"'               shift, and go to state 56
 
-    $default  reduce using rule 110 (Actuals)
-
-    ExprList  go to state 151
-    Expr      go to state 147
+    Expr      go to state 151
     Call      go to state 66
-    Actuals   go to state 152
     LValue    go to state 67
     Constant  go to state 68
 
@@ -1654,9 +1660,9 @@ State 95
     '-'               shift, and go to state 55
     '"'               shift, and go to state 56
 
-    $default  reduce using rule 110 (Actuals)
+    $default  reduce using rule 114 (Actuals)
 
-    ExprList  go to state 151
+    ExprList  go to state 152
     Expr      go to state 147
     Call      go to state 66
     Actuals   go to state 153
@@ -1688,8 +1694,8 @@ State 96
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_Slb  shift, and go to state 118
     '.'    shift, and go to state 129
@@ -1721,8 +1727,8 @@ State 97
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_Slb  shift, and go to state 118
     '.'    shift, and go to state 129
@@ -1754,8 +1760,8 @@ State 98
    97     | Expr . T_Decr
    98     | '(' Expr . ')'
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -1806,8 +1812,8 @@ State 99
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_Slb  shift, and go to state 118
     '.'    shift, and go to state 129
@@ -1839,8 +1845,8 @@ State 100
    97     | Expr . T_Decr
    99     | '"' Expr . '"'
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -2193,7 +2199,7 @@ State 117
 
 State 118
 
-  113 LValue: Expr T_Slb . Expr T_Srb
+  117 LValue: Expr T_Slb . Expr T_Srb
 
     T_Null            shift, and go to state 32
     T_This            shift, and go to state 33
@@ -2502,7 +2508,7 @@ State 128
 State 129
 
   108 Call: Expr '.' . T_Identifier '(' Actuals ')'
-  112 LValue: Expr '.' . T_Identifier
+  116 LValue: Expr '.' . T_Identifier
 
     T_Identifier  shift, and go to state 176
 
@@ -2687,8 +2693,8 @@ State 141
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -2747,8 +2753,8 @@ State 143
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -2806,8 +2812,8 @@ State 145
    97     | Expr . T_Decr
   104     | T_NewArray '(' Expr . ',' Type ')'
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -2867,8 +2873,8 @@ State 147
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -2934,8 +2940,8 @@ State 150
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -2964,19 +2970,67 @@ State 150
 
 State 151
 
-   70 ExprList: ExprList . ',' Expr
-  109 Actuals: ExprList .
+   75 Expr: Expr . T_Or Expr
+   76     | Expr . T_And Expr
+   77     | Expr . '<' Expr
+   78     | Expr . '>' Expr
+   79     | Expr . T_GreaterEqual Expr
+   80     | Expr . T_LessEqual Expr
+   81     | Expr . T_Equal Expr
+   82     | Expr . T_NotEqual Expr
+   83     | Expr . T_Add Expr
+   84     | Expr . T_Sub Expr
+   85     | Expr . T_Mul Expr
+   86     | Expr . T_Div Expr
+   87     | Expr . T_Mod Expr
+   88     | Expr . '^' Expr
+   89     | Expr . '|' Expr
+   90     | Expr . '&' Expr
+   91     | Expr . T_LeftShift Expr
+   92     | Expr . T_RightShift Expr
+   96     | Expr . T_Incr
+   97     | Expr . T_Decr
+  107 Call: T_Call T_Pl Expr . callout_args T_Pr
+  108     | Expr . '.' T_Identifier '(' Actuals ')'
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
-    ','  shift, and go to state 189
+    T_LessEqual     shift, and go to state 108
+    T_GreaterEqual  shift, and go to state 109
+    T_Equal         shift, and go to state 110
+    T_NotEqual      shift, and go to state 111
+    T_LeftShift     shift, and go to state 112
+    T_RightShift    shift, and go to state 113
+    T_And           shift, and go to state 114
+    T_Or            shift, and go to state 115
+    T_Incr          shift, and go to state 116
+    T_Decr          shift, and go to state 117
+    T_Slb           shift, and go to state 118
+    T_Add           shift, and go to state 119
+    T_Sub           shift, and go to state 120
+    T_Mul           shift, and go to state 121
+    T_Div           shift, and go to state 122
+    T_Mod           shift, and go to state 123
+    '&'             shift, and go to state 124
+    '^'             shift, and go to state 125
+    '|'             shift, and go to state 126
+    '<'             shift, and go to state 127
+    '>'             shift, and go to state 128
+    '.'             shift, and go to state 129
 
-    $default  reduce using rule 109 (Actuals)
+    $default  reduce using rule 109 (callout_args)
+
+    callout_args  go to state 192
 
 
 State 152
 
-  107 Call: T_Call T_Pl Actuals . T_Pr
+   70 ExprList: ExprList . ',' Expr
+  113 Actuals: ExprList .
 
-    T_Pr  shift, and go to state 192
+    ','  shift, and go to state 189
+
+    $default  reduce using rule 113 (Actuals)
 
 
 State 153
@@ -3031,8 +3085,8 @@ State 157
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LeftShift   shift, and go to state 112
     T_RightShift  shift, and go to state 113
@@ -3078,8 +3132,8 @@ State 158
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LeftShift   shift, and go to state 112
     T_RightShift  shift, and go to state 113
@@ -3125,8 +3179,8 @@ State 159
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -3174,8 +3228,8 @@ State 160
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -3223,8 +3277,8 @@ State 161
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_Incr  shift, and go to state 116
     T_Decr  shift, and go to state 117
@@ -3263,8 +3317,8 @@ State 162
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_Incr  shift, and go to state 116
     T_Decr  shift, and go to state 117
@@ -3303,8 +3357,8 @@ State 163
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -3354,8 +3408,8 @@ State 164
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -3405,9 +3459,9 @@ State 165
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
-  113       | Expr T_Slb Expr . T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
+  117       | Expr T_Slb Expr . T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -3458,8 +3512,8 @@ State 166
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_Incr  shift, and go to state 116
     T_Decr  shift, and go to state 117
@@ -3496,8 +3550,8 @@ State 167
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_Incr  shift, and go to state 116
     T_Decr  shift, and go to state 117
@@ -3534,8 +3588,8 @@ State 168
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_Incr  shift, and go to state 116
     T_Decr  shift, and go to state 117
@@ -3569,8 +3623,8 @@ State 169
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_Incr  shift, and go to state 116
     T_Decr  shift, and go to state 117
@@ -3604,8 +3658,8 @@ State 170
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_Incr  shift, and go to state 116
     T_Decr  shift, and go to state 117
@@ -3639,8 +3693,8 @@ State 171
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -3691,8 +3745,8 @@ State 172
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -3743,8 +3797,8 @@ State 173
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -3795,8 +3849,8 @@ State 174
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LeftShift   shift, and go to state 112
     T_RightShift  shift, and go to state 113
@@ -3842,8 +3896,8 @@ State 175
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LeftShift   shift, and go to state 112
     T_RightShift  shift, and go to state 113
@@ -3868,11 +3922,11 @@ State 175
 State 176
 
   108 Call: Expr '.' T_Identifier . '(' Actuals ')'
-  112 LValue: Expr '.' T_Identifier .
+  116 LValue: Expr '.' T_Identifier .
 
     '('  shift, and go to state 195
 
-    $default  reduce using rule 112 (LValue)
+    $default  reduce using rule 116 (LValue)
 
 
 State 177
@@ -3899,8 +3953,8 @@ State 177
    97     | Expr . T_Decr
   105     | LValue T_SingleEqual Expr .
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -4196,9 +4250,11 @@ State 191
 
 State 192
 
-  107 Call: T_Call T_Pl Actuals T_Pr .
+  107 Call: T_Call T_Pl Expr callout_args . T_Pr
+  110 callout_args: callout_args . T_Comma callout_args_sub
 
-    $default  reduce using rule 107 (Call)
+    T_Pr     shift, and go to state 208
+    T_Comma  shift, and go to state 209
 
 
 State 193
@@ -4210,9 +4266,9 @@ State 193
 
 State 194
 
-  113 LValue: Expr T_Slb Expr T_Srb .
+  117 LValue: Expr T_Slb Expr T_Srb .
 
-    $default  reduce using rule 113 (LValue)
+    $default  reduce using rule 117 (LValue)
 
 
 State 195
@@ -4237,12 +4293,12 @@ State 195
     '-'               shift, and go to state 55
     '"'               shift, and go to state 56
 
-    $default  reduce using rule 110 (Actuals)
+    $default  reduce using rule 114 (Actuals)
 
-    ExprList  go to state 151
+    ExprList  go to state 152
     Expr      go to state 147
     Call      go to state 66
-    Actuals   go to state 208
+    Actuals   go to state 210
     LValue    go to state 67
     Constant  go to state 68
 
@@ -4313,8 +4369,8 @@ State 202
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -4338,7 +4394,7 @@ State 202
     '<'             shift, and go to state 127
     '>'             shift, and go to state 128
     '.'             shift, and go to state 129
-    ';'             shift, and go to state 209
+    ';'             shift, and go to state 211
 
 
 State 203
@@ -4346,7 +4402,7 @@ State 203
    68 IfStmt: T_If '(' Expr ')' Stmt .
    69       | T_If '(' Expr ')' Stmt . T_Else Stmt
 
-    T_Else  shift, and go to state 210
+    T_Else  shift, and go to state 212
 
     $default  reduce using rule 68 (IfStmt)
 
@@ -4355,7 +4411,7 @@ State 204
 
   104 Expr: T_NewArray '(' Expr ',' Type . ')'
 
-    ')'  shift, and go to state 211
+    ')'  shift, and go to state 213
 
 
 State 205
@@ -4382,8 +4438,8 @@ State 205
    96     | Expr . T_Incr
    97     | Expr . T_Decr
   108 Call: Expr . '.' T_Identifier '(' Actuals ')'
-  112 LValue: Expr . '.' T_Identifier
-  113       | Expr . T_Slb Expr T_Srb
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
 
     T_LessEqual     shift, and go to state 108
     T_GreaterEqual  shift, and go to state 109
@@ -4422,20 +4478,58 @@ State 207
 
    58 Stmt: T_Switch '(' Expr ')' '{' . CaseStmtList DefaultStmt '}'
 
-    T_Case  shift, and go to state 212
+    T_Case  shift, and go to state 214
 
-    CaseStmtList  go to state 213
-    CaseStmt      go to state 214
+    CaseStmtList  go to state 215
+    CaseStmt      go to state 216
 
 
 State 208
 
-  108 Call: Expr '.' T_Identifier '(' Actuals . ')'
+  107 Call: T_Call T_Pl Expr callout_args T_Pr .
 
-    ')'  shift, and go to state 215
+    $default  reduce using rule 107 (Call)
 
 
 State 209
+
+  110 callout_args: callout_args T_Comma . callout_args_sub
+
+    T_Null            shift, and go to state 32
+    T_This            shift, and go to state 33
+    T_New             shift, and go to state 39
+    T_NewArray        shift, and go to state 40
+    T_ReadInteger     shift, and go to state 42
+    T_ReadLine        shift, and go to state 43
+    T_Call            shift, and go to state 45
+    T_Identifier      shift, and go to state 47
+    T_StringConstant  shift, and go to state 48
+    T_IntConstant     shift, and go to state 49
+    T_DoubleConstant  shift, and go to state 50
+    T_BoolConstant    shift, and go to state 51
+    '!'               shift, and go to state 52
+    '~'               shift, and go to state 53
+    '('               shift, and go to state 54
+    '-'               shift, and go to state 55
+    '"'               shift, and go to state 56
+
+    $default  reduce using rule 111 (callout_args_sub)
+
+    Expr              go to state 217
+    Call              go to state 66
+    callout_args_sub  go to state 218
+    LValue            go to state 67
+    Constant          go to state 68
+
+
+State 210
+
+  108 Call: Expr '.' T_Identifier '(' Actuals . ')'
+
+    ')'  shift, and go to state 219
+
+
+State 211
 
    56 Stmt: T_For '(' OptExpr ';' Expr ';' . OptExpr ')' Stmt
 
@@ -4459,14 +4553,14 @@ State 209
 
     $default  reduce using rule 61 (OptExpr)
 
-    OptExpr   go to state 216
+    OptExpr   go to state 220
     Expr      go to state 65
     Call      go to state 66
     LValue    go to state 67
     Constant  go to state 68
 
 
-State 210
+State 212
 
    69 IfStmt: T_If '(' Expr ')' Stmt T_Else . Stmt
 
@@ -4499,7 +4593,7 @@ State 210
     $default  reduce using rule 61 (OptExpr)
 
     StmtBlock  go to state 59
-    Stmt       go to state 217
+    Stmt       go to state 221
     OptExpr    go to state 63
     IfStmt     go to state 64
     Expr       go to state 65
@@ -4508,70 +4602,130 @@ State 210
     Constant   go to state 68
 
 
-State 211
+State 213
 
   104 Expr: T_NewArray '(' Expr ',' Type ')' .
 
     $default  reduce using rule 104 (Expr)
 
 
-State 212
+State 214
 
    64 CaseStmt: T_Case . ':' StmtList
    65         | T_Case . T_IntConstant ':'
 
-    T_IntConstant  shift, and go to state 218
-    ':'            shift, and go to state 219
+    T_IntConstant  shift, and go to state 222
+    ':'            shift, and go to state 223
 
 
-State 213
+State 215
 
    58 Stmt: T_Switch '(' Expr ')' '{' CaseStmtList . DefaultStmt '}'
    62 CaseStmtList: CaseStmtList . CaseStmt
 
-    T_Case     shift, and go to state 212
-    T_Default  shift, and go to state 220
+    T_Case     shift, and go to state 214
+    T_Default  shift, and go to state 224
 
-    CaseStmt     go to state 221
-    DefaultStmt  go to state 222
+    CaseStmt     go to state 225
+    DefaultStmt  go to state 226
 
 
-State 214
+State 216
 
    63 CaseStmtList: CaseStmt .
 
     $default  reduce using rule 63 (CaseStmtList)
 
 
-State 215
+State 217
+
+   75 Expr: Expr . T_Or Expr
+   76     | Expr . T_And Expr
+   77     | Expr . '<' Expr
+   78     | Expr . '>' Expr
+   79     | Expr . T_GreaterEqual Expr
+   80     | Expr . T_LessEqual Expr
+   81     | Expr . T_Equal Expr
+   82     | Expr . T_NotEqual Expr
+   83     | Expr . T_Add Expr
+   84     | Expr . T_Sub Expr
+   85     | Expr . T_Mul Expr
+   86     | Expr . T_Div Expr
+   87     | Expr . T_Mod Expr
+   88     | Expr . '^' Expr
+   89     | Expr . '|' Expr
+   90     | Expr . '&' Expr
+   91     | Expr . T_LeftShift Expr
+   92     | Expr . T_RightShift Expr
+   96     | Expr . T_Incr
+   97     | Expr . T_Decr
+  108 Call: Expr . '.' T_Identifier '(' Actuals ')'
+  112 callout_args_sub: Expr .
+  116 LValue: Expr . '.' T_Identifier
+  117       | Expr . T_Slb Expr T_Srb
+
+    T_LessEqual     shift, and go to state 108
+    T_GreaterEqual  shift, and go to state 109
+    T_Equal         shift, and go to state 110
+    T_NotEqual      shift, and go to state 111
+    T_LeftShift     shift, and go to state 112
+    T_RightShift    shift, and go to state 113
+    T_And           shift, and go to state 114
+    T_Or            shift, and go to state 115
+    T_Incr          shift, and go to state 116
+    T_Decr          shift, and go to state 117
+    T_Slb           shift, and go to state 118
+    T_Add           shift, and go to state 119
+    T_Sub           shift, and go to state 120
+    T_Mul           shift, and go to state 121
+    T_Div           shift, and go to state 122
+    T_Mod           shift, and go to state 123
+    '&'             shift, and go to state 124
+    '^'             shift, and go to state 125
+    '|'             shift, and go to state 126
+    '<'             shift, and go to state 127
+    '>'             shift, and go to state 128
+    '.'             shift, and go to state 129
+
+    $default  reduce using rule 112 (callout_args_sub)
+
+
+State 218
+
+  110 callout_args: callout_args T_Comma callout_args_sub .
+
+    $default  reduce using rule 110 (callout_args)
+
+
+State 219
 
   108 Call: Expr '.' T_Identifier '(' Actuals ')' .
 
     $default  reduce using rule 108 (Call)
 
 
-State 216
+State 220
 
    56 Stmt: T_For '(' OptExpr ';' Expr ';' OptExpr . ')' Stmt
 
-    ')'  shift, and go to state 223
+    ')'  shift, and go to state 227
 
 
-State 217
+State 221
 
    69 IfStmt: T_If '(' Expr ')' Stmt T_Else Stmt .
 
     $default  reduce using rule 69 (IfStmt)
 
 
-State 218
+State 222
 
    65 CaseStmt: T_Case T_IntConstant . ':'
 
-    ':'  shift, and go to state 224
+    ':'  shift, and go to state 228
 
 
-State 219
+State 223
 
    64 CaseStmt: T_Case ':' . StmtList
 
@@ -4604,7 +4758,7 @@ State 219
     $default  reduce using rule 61 (OptExpr)
 
     StmtBlock  go to state 59
-    StmtList   go to state 225
+    StmtList   go to state 229
     Stmt       go to state 62
     OptExpr    go to state 63
     IfStmt     go to state 64
@@ -4614,29 +4768,29 @@ State 219
     Constant   go to state 68
 
 
-State 220
+State 224
 
    66 DefaultStmt: T_Default . ':' StmtList
    67            | T_Default . ':'
 
-    ':'  shift, and go to state 226
+    ':'  shift, and go to state 230
 
 
-State 221
+State 225
 
    62 CaseStmtList: CaseStmtList CaseStmt .
 
     $default  reduce using rule 62 (CaseStmtList)
 
 
-State 222
+State 226
 
    58 Stmt: T_Switch '(' Expr ')' '{' CaseStmtList DefaultStmt . '}'
 
-    '}'  shift, and go to state 227
+    '}'  shift, and go to state 231
 
 
-State 223
+State 227
 
    56 Stmt: T_For '(' OptExpr ';' Expr ';' OptExpr ')' . Stmt
 
@@ -4669,7 +4823,7 @@ State 223
     $default  reduce using rule 61 (OptExpr)
 
     StmtBlock  go to state 59
-    Stmt       go to state 228
+    Stmt       go to state 232
     OptExpr    go to state 63
     IfStmt     go to state 64
     Expr       go to state 65
@@ -4678,14 +4832,14 @@ State 223
     Constant   go to state 68
 
 
-State 224
+State 228
 
    65 CaseStmt: T_Case T_IntConstant ':' .
 
     $default  reduce using rule 65 (CaseStmt)
 
 
-State 225
+State 229
 
    46 StmtList: StmtList . Stmt
    64 CaseStmt: T_Case ':' StmtList .
@@ -4729,7 +4883,7 @@ State 225
     Constant   go to state 68
 
 
-State 226
+State 230
 
    66 DefaultStmt: T_Default ':' . StmtList
    67            | T_Default ':' .
@@ -4764,7 +4918,7 @@ State 226
     $default  reduce using rule 61 (OptExpr)
 
     StmtBlock  go to state 59
-    StmtList   go to state 229
+    StmtList   go to state 233
     Stmt       go to state 62
     OptExpr    go to state 63
     IfStmt     go to state 64
@@ -4774,21 +4928,21 @@ State 226
     Constant   go to state 68
 
 
-State 227
+State 231
 
    58 Stmt: T_Switch '(' Expr ')' '{' CaseStmtList DefaultStmt '}' .
 
     $default  reduce using rule 58 (Stmt)
 
 
-State 228
+State 232
 
    56 Stmt: T_For '(' OptExpr ';' Expr ';' OptExpr ')' Stmt .
 
     $default  reduce using rule 56 (Stmt)
 
 
-State 229
+State 233
 
    46 StmtList: StmtList . Stmt
    66 DefaultStmt: T_Default ':' StmtList .

@@ -35,7 +35,7 @@ void yyerror(const char *s);
 %token CLASS PROGRAM T_Call  VOID TRUE FALSE DECIMAL T_Semicolon 
 %token  END ENDL
 %token  TCASSIGNMENT TCEQ TCNE TCLT TCLE TCGT TCGE 
-%token  T_Pl T_Pr TCLB TCRB T_Srb T_Slb TCOMMA TCDOT 
+%token  T_Pl T_Pr TCLB TCRB T_Srb T_Slb T_Comma TCDOT 
 %token  T_Add T_Sub T_Mul T_Div T_Mod
 
 %token <identifier> T_Identifier
@@ -101,7 +101,7 @@ Type:
 ;
 
 NamedType:
-  T_Identifier {    printf("NamedType");  }
+  T_Identifier {    fprintf(yyout,"NamedType");  }
 ;
 
 ClassDecl:  T_Class T_Identifier ClassExtends ClassImplements TCLB FieldList TCRB { fprintf(yyout,"classDecl");    }
@@ -114,18 +114,18 @@ ClassExtends:
 ;
 
 ClassImplements
-: T_Implements ImplementsTypeList {   printf("T_Implements");   }
+: T_Implements ImplementsTypeList {   fprintf(yyout,"T_Implements");   }
 | /* empty */              { }
 ;
 
 ImplementsTypeList:
-  ImplementsTypeList ',' T_Identifier { printf("ImplementsTypeList");  }
-| T_Identifier { printf("T_Identifier"); }
+  ImplementsTypeList ',' T_Identifier { fprintf(yyout,"ImplementsTypeList");  }
+| T_Identifier { fprintf(yyout,"T_Identifier"); }
 ;
 
 InterfaceDecl:
-  T_Interface T_Identifier '{' PrototypeList '}' {  printf("T_Interface");   }
-| T_Interface T_Identifier '{' '}' {  printf("T_Interface");    }
+  T_Interface T_Identifier '{' PrototypeList '}' {  fprintf(yyout,"T_Interface");   }
+| T_Interface T_Identifier '{' '}' {  fprintf(yyout,"T_Interface");    }
 ;
 
 FnDecl:
@@ -133,26 +133,26 @@ FnDecl:
 ;
 
 FieldList:
-  FieldList VarDecl        {  fprintf(yyout,"Var_FieldList\n");  }
-| FieldList FnDecl         {  fprintf(yyout,"Fn_FieldList\n"); }
-| FieldList Stmt           {  fprintf(yyout,"Statement_FieldList\n"); }
-| VarDecl                  {  fprintf(yyout,"T_VarDecl\n");  }
-| FnDecl                   {  fprintf(yyout,"T_FnDecl\n");  }
-| Stmt                   {  fprintf(yyout,"T_StmntDecl\n");  }
+  FieldList VarDecl        {  }
+| FieldList FnDecl         {  }
+| FieldList Stmt           {  }
+| VarDecl                  {   }
+| FnDecl                   {  }
+| Stmt                   {   }
 ;
 
 Formals:
-  FormalsList              { printf("FormalsList");   }
+  FormalsList              { fprintf(yyout,"FormalsList");   }
 | /* empty */              { }
 ;
 
 FormalsList:
-  Variable                 {  printf("FormalsList Variable");  }
-| FormalsList ',' Variable { printf("FormalsList Variable , variable");    }
+  Variable                 {  fprintf(yyout,"FormalsList Variable\n");  }
+| FormalsList ',' Variable {  fprintf(yyout,"FormalsList Variable , variable\n");    }
 ;
 
 Prototype:
-  FnDef ';'                { printf("FnDef ;");}
+  FnDef ';'                { fprintf(yyout,"FnDef ;\n");}
 ;
 
 FnDef:
@@ -161,65 +161,64 @@ Type T_Identifier '(' Formals ')' {  fprintf(yyout,"function\n");  }
 ;
 
 PrototypeList:
-  PrototypeList Prototype { printf("PrototypeList Prototype");   }
-| Prototype                { printf("Prototype");  }
+  PrototypeList Prototype { fprintf(yyout,"PrototypeList Prototype");   }
+| Prototype                { fprintf(yyout,"Prototype");  }
 ;
 
 StmtBlock:
-  TCLB VarDeclList StmtList TCRB {printf("VarDeclList StmtList ");   }
-| TCLB VarDeclList TCRB      {printf("VarDeclList  ");  }
-| TCLB StmtList TCRB         { printf(" StmtList ");  }
-| TCLB TCRB 		{printf(" {} ");   }
+  TCLB VarDeclList StmtList TCRB {fprintf(yyout,"VarDeclList StmtList");   }
+| TCLB VarDeclList TCRB          {fprintf(yyout,"VarDeclList");  }
+| TCLB StmtList TCRB             {fprintf(yyout,"StmtList");  }
+| TCLB TCRB 			 {fprintf(yyout,"{}");   }
 ;
 
 StmtList:
-  StmtList Stmt            { printf("  StmtList Stmt   ");  }
-| Stmt                     { printf("   Stmt   "); }
+  StmtList Stmt            { fprintf(yyout,"StmtList Stmt");  }
+| Stmt                     { fprintf(yyout,"Stmt"); }
 ;
 
 VarDeclList:
-  VarDeclList VarDecl      {  printf("    VarDeclList VarDecl     "); }
-| VarDecl                  {  printf("     VarDecl     "); }
+  VarDeclList VarDecl      {  fprintf(yyout,"VarDeclList VarDecl"); }
+| VarDecl                  {  fprintf(yyout,"VarDecl"); }
 ;
 
 Stmt:
-  OptExpr T_Semicolon       {   fprintf(yyout,"OptExpr\n ;");   }
-| T_While '(' Expr ')' Stmt { fprintf(yyout,"T_While ;");   }
-| T_Return ';'             {fprintf(yyout,"T_While ;"); }
-| T_Return Expr ';'        { fprintf(yyout,"T_Return ;");  }
-| T_Break ';'              {fprintf(yyout,"T_Break ;");  }
-| T_Print '(' ExprList ')' ';' { fprintf(yyout,"T_Print ;");  }
-| T_For '(' OptExpr ';' Expr ';' OptExpr ')' Stmt { fprintf(yyout,"T_For ;");   }
-| IfStmt                   {fprintf(yyout,"T_IfStmt ;");  }
-| T_Switch '(' Expr ')' '{' CaseStmtList DefaultStmt '}' {fprintf(yyout,"T_Switch ;");   }
-| StmtBlock                {fprintf(yyout,"T_StmtBlock ;");  }
-
+  OptExpr T_Semicolon       {     }
+| T_While '(' Expr ')' Stmt { fprintf(yyout,"T_While ;\n");   }
+| T_Return ';'             {fprintf(yyout,"T_While ;\n"); }
+| T_Return Expr ';'        { fprintf(yyout,"T_Return ;\n");  }
+| T_Break ';'              {fprintf(yyout,"T_Break ;\n");  }
+| T_Print '(' ExprList ')' ';' { fprintf(yyout,"T_Print ;\n");  }
+| T_For '(' OptExpr ';' Expr ';' OptExpr ')' Stmt { fprintf(yyout,"T_For ;\n");   }
+| IfStmt                   {fprintf(yyout,"T_IfStmt ;\n");  }
+| T_Switch '(' Expr ')' '{' CaseStmtList DefaultStmt '}' {fprintf(yyout,"T_Switch ;\n");   }
+| StmtBlock                {fprintf(yyout,"T_StmtBlock ;\n");  }
 ;
 
 OptExpr:
-  Expr                     { fprintf(yyout,"OptExpr");  }
-| /* empty */              { fprintf(yyout,"OptExpr");  }
+  Expr                     { fprintf(yyout,"OptExpr\n");  }
+| /* empty */              { fprintf(yyout,"OptExpr\n");  }
 ;
 
 
 CaseStmtList:
-  CaseStmtList CaseStmt    { fprintf(yyout,"CaseStmtList");  }
-| CaseStmt                 { fprintf(yyout,"CaseStmtList");  }
+  CaseStmtList CaseStmt    { fprintf(yyout,"CaseStmtList\n");  }
+| CaseStmt                 { fprintf(yyout,"CaseStmtList\n");  }
 ;
 
 CaseStmt:
-  T_Case 	 ':' StmtList %prec NONEMPTYCASE { fprintf(yyout,"T_Case T_IntConstant");  }
-| T_Case T_IntConstant ':' %prec EMPTYCASE {  fprintf(yyout,"T_IntConstant");  }
+  T_Case 	 ':' StmtList %prec NONEMPTYCASE { fprintf(yyout,"T_Case T_IntConstant\n");  }
+| T_Case T_IntConstant ':' %prec EMPTYCASE {  fprintf(yyout,"T_IntConstant\n");  }
 ;
 
 DefaultStmt:
-  T_Default ':' StmtList %prec NONEMPTYDEFAULT {fprintf(yyout,"T_Default");  }
-| T_Default ':' %prec EMPTYDEFAULT { fprintf(yyout,"T_Default");  }
+  T_Default ':' StmtList %prec NONEMPTYDEFAULT {fprintf(yyout,"T_Default\n");  }
+| T_Default ':' %prec EMPTYDEFAULT { fprintf(yyout,"T_Default\n");  }
 ;
 
 IfStmt:
-  T_If '(' Expr ')' Stmt %prec NOELSE { printf(" T_If");  }
-| T_If '(' Expr ')' Stmt T_Else Stmt { printf(" T_If");  }
+  T_If '(' Expr ')' Stmt %prec NOELSE { fprintf(yyout," T_If\n");  }
+| T_If '(' Expr ')' Stmt T_Else Stmt { fprintf(yyout,"T_If\n");  }
 ;
 
 ExprList:
@@ -228,52 +227,60 @@ ExprList:
 ;
 
 Expr:
-  LValue                   { fprintf(yyout,"LValue Expr\n"); }
-| Call                     { fprintf(yyout,"CallExpr\n"); }
-| Constant                 { fprintf(yyout,"ConstantExpr\n"); }
-| Expr T_Or Expr	   { fprintf(yyout,"||Expr\n");  }
-| Expr T_And Expr 	   { fprintf(yyout,"&&Expr\n");  }
-| Expr '<' Expr		   { fprintf(yyout,"<Expr\n");  }
-| Expr '>' Expr		   { fprintf(yyout,">Expr\n");  }
-| Expr T_GreaterEqual Expr { fprintf(yyout,">=Expr\n");  }
-| Expr T_LessEqual Expr    { fprintf(yyout,"<=Expr\n");  }
-| Expr T_Equal Expr        { fprintf(yyout,"=Expr\n");  }
-| Expr T_NotEqual Expr     { fprintf(yyout,"!=Expr\n");  }
-| Expr T_Add Expr          { fprintf(yyout,"+Expr\n");  }
-| Expr T_Sub Expr 	   { fprintf(yyout,"-Expr\n");  }
-| Expr T_Mul Expr 	   { fprintf(yyout,"*Expr\n");  }
-| Expr T_Div Expr	   { fprintf(yyout,"/Expr\n");  }
-| Expr T_Mod Expr	   { fprintf(yyout,"ModExpr\n");  }
-| Expr '^' Expr 	   { fprintf(yyout,"^Expr\n");  }
-| Expr '|' Expr		   { fprintf(yyout,"|Expr\n");  }
-| Expr '&' Expr		   { fprintf(yyout,"&Expr\n");  }
-| Expr T_LeftShift Expr    { fprintf(yyout,"LShiftExpr\n");  }
-| Expr T_RightShift Expr   { fprintf(yyout,"RShiftExpr\n");  }
+  LValue                   { fprintf(yyout,"LValue\n"); }
+| Call                     { fprintf(yyout,"Call\n"); }
+| Constant                 { fprintf(yyout,"Constant\n"); }
+| Expr T_Or Expr	   { fprintf(yyout,"||\n");  }
+| Expr T_And Expr 	   { fprintf(yyout,"&&\n");  }
+| Expr '<' Expr		   { fprintf(yyout,"<\n");  }
+| Expr '>' Expr		   { fprintf(yyout,">\n");  }
+| Expr T_GreaterEqual Expr { fprintf(yyout,">=\n");  }
+| Expr T_LessEqual Expr    { fprintf(yyout,"<=\n");  }
+| Expr T_Equal Expr        { fprintf(yyout,"=\n");  }
+| Expr T_NotEqual Expr     { fprintf(yyout,"!=\n");  }
+| Expr T_Add Expr          { fprintf(yyout,"+\n");  }
+| Expr T_Sub Expr 	   { fprintf(yyout,"-\n");  }
+| Expr T_Mul Expr 	   { fprintf(yyout,"*\n");  }
+| Expr T_Div Expr	   { fprintf(yyout,"/\n");  }
+| Expr T_Mod Expr	   { fprintf(yyout,"Mod\n");  }
+| Expr '^' Expr 	   { fprintf(yyout,"^\n");  }
+| Expr '|' Expr		   { fprintf(yyout,"|\n");  }
+| Expr '&' Expr		   { fprintf(yyout,"&\n");  }
+| Expr T_LeftShift Expr    { fprintf(yyout,"LS\n");  }
+| Expr T_RightShift Expr   { fprintf(yyout,"RSr\n");  }
 | '-' Expr %prec NEG       { fprintf(yyout,"-\n");  }
 | '!' Expr 		   { fprintf(yyout,"!\n");  }
 | '~' Expr		   { fprintf(yyout,"~\n");  }
-| Expr T_Incr		   { fprintf(yyout,"incrExpr\n");  }
-| Expr T_Decr		   { fprintf(yyout,"decrExpr\n");  }
-| '(' Expr ')'             { fprintf(yyout,"COParenExpr\n");  }
-| '"' Expr '"'             { fprintf(yyout,"CalloutFunctionExpr\n");  }
+| Expr T_Incr		   { fprintf(yyout,"++\n");  }
+| Expr T_Decr		   { fprintf(yyout,"--\n");  }
+| '(' Expr ')'             { fprintf(yyout,"Op\n");  }
+| '"' Expr '"'             { fprintf(yyout,"FExpr\n");  }
 | T_This                   { fprintf(yyout,"thisExpr\n");  }
 | T_ReadInteger '(' ')'    { fprintf(yyout,"readintExpr\n");  }
 | T_ReadLine '(' ')'       { fprintf(yyout,"readlineExpr\n");  }
 | T_New NamedType          { fprintf(yyout,"newarrayExpr\n");  }
 | T_NewArray '(' Expr ',' Type ')' { fprintf(yyout,"newarryExpr\n");  }
-| LValue T_SingleEqual Expr { fprintf(yyout,"Equal Expr\n");  }
+| LValue T_SingleEqual Expr { fprintf(yyout,"=Expr\n");  }
 
 ;
 
 Call:
   T_Identifier T_Pl Actuals T_Pr  { fprintf(yyout,"Call");  }
-| T_Call T_Pl Actuals  T_Pr  { fprintf(yyout,"Call");  }
+| T_Call T_Pl Expr callout_args T_Pr  { fprintf(yyout,"CallOut");  }
 | Expr '.' T_Identifier '(' Actuals ')' {fprintf(yyout,"Call");  }
+;
+
+callout_args:
+ | callout_args T_Comma callout_args_sub { fprintf(yyout,"CallOut args");  }
+;
+
+callout_args_sub:
+ | Expr		{ fprintf(yyout,"Callout argssub");  }
 ;
 
 Actuals:
   ExprList             {fprintf(yyout,"ExprList\n");  }
-| /* empty */          {fprintf(yyout,"ExprList\n");  }
+| /* empty */          
 ;
 
 LValue:

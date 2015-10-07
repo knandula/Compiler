@@ -1,4 +1,5 @@
 class Program
 {
+int A;
 int A[10];
 }

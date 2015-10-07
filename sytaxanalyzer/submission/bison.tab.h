@@ -105,7 +105,7 @@ extern int yydebug;
     TCRB = 315,
     T_Srb = 316,
     T_Slb = 317,
-    TCOMMA = 318,
+    T_Comma = 318,
     TCDOT = 319,
     T_Add = 320,
     T_Sub = 321,
