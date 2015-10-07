@@ -27,25 +27,30 @@ Variable
 Var_FieldList
 IExprT_IntConstant   ConstantExpr
 Equal Expr
-OptExprOptExpr ;Statement_FieldList
+OptExprOptExpr
+ ;Statement_FieldList
 IExprT_IntConstant   ConstantExpr
 Equal Expr
-OptExprOptExpr ;Statement_FieldList
+OptExprOptExpr
+ ;Statement_FieldList
 IExprT_IntConstant   ConstantExpr
 Equal Expr
-OptExprOptExpr ;Statement_FieldList
+OptExprOptExpr
+ ;Statement_FieldList
 IExprLValue Expr
 T_IntConstant   ConstantExpr
 SExprT_IntConstant   ConstantExpr
 Equal Expr
-OptExprOptExpr ;Statement_FieldList
+OptExprOptExpr
+ ;Statement_FieldList
 IExprLValue Expr
 T_IntConstant   ConstantExpr
 T_IntConstant   ConstantExpr
 +Expr
 SExprT_IntConstant   ConstantExpr
 Equal Expr
-OptExprOptExpr ;Statement_FieldList
+OptExprOptExpr
+ ;Statement_FieldList
 IExprT_IntConstant   ConstantExpr
 T_IntConstant   ConstantExpr
 +Expr
@@ -56,9 +61,19 @@ T_IntConstant   ConstantExpr
 *Expr
 -Expr
 Equal Expr
-OptExprOptExpr ;Statement_FieldList
+OptExprOptExpr
+ ;Statement_FieldList
 IExprLValue Expr
 T_IntConstant   ConstantExpr
 SExprIExprLValue Expr
 Equal Expr
-OptExprOptExpr ;Statement_FieldList
+OptExprOptExpr
+ ;Statement_FieldList
+""IExprLValue Expr
+ExprList
+ExprList
+CallCallExpr
+OptExprOptExpr
+ ;Statement_FieldList
+classDeclClass Decl
+PROGRAM ENCOUNTERED

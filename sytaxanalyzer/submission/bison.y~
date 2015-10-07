@@ -156,8 +156,7 @@ Prototype:
 ;
 
 FnDef:
- T_Identifier '(' Formals ')' {  fprintf(yyout,"calloutfunction\n");  }
-|Type T_Identifier '(' Formals ')' {  fprintf(yyout,"function\n");  }
+Type T_Identifier '(' Formals ')' {  fprintf(yyout,"function\n");  }
 
 ;
 
@@ -184,7 +183,7 @@ VarDeclList:
 ;
 
 Stmt:
-  OptExpr T_Semicolon       {   fprintf(yyout,"OptExpr ;");   }
+  OptExpr T_Semicolon       {   fprintf(yyout,"OptExpr\n ;");   }
 | T_While '(' Expr ')' Stmt { fprintf(yyout,"T_While ;");   }
 | T_Return ';'             {fprintf(yyout,"T_While ;"); }
 | T_Return Expr ';'        { fprintf(yyout,"T_Return ;");  }
@@ -194,6 +193,7 @@ Stmt:
 | IfStmt                   {fprintf(yyout,"T_IfStmt ;");  }
 | T_Switch '(' Expr ')' '{' CaseStmtList DefaultStmt '}' {fprintf(yyout,"T_Switch ;");   }
 | StmtBlock                {fprintf(yyout,"T_StmtBlock ;");  }
+
 ;
 
 OptExpr:
@@ -255,16 +255,19 @@ Expr:
 | Expr T_Incr		   { fprintf(yyout,"incrExpr\n");  }
 | Expr T_Decr		   { fprintf(yyout,"decrExpr\n");  }
 | '(' Expr ')'             { fprintf(yyout,"COParenExpr\n");  }
+| '"' Expr '"'             { fprintf(yyout,"CalloutFunctionExpr\n");  }
 | T_This                   { fprintf(yyout,"thisExpr\n");  }
 | T_ReadInteger '(' ')'    { fprintf(yyout,"readintExpr\n");  }
 | T_ReadLine '(' ')'       { fprintf(yyout,"readlineExpr\n");  }
 | T_New NamedType          { fprintf(yyout,"newarrayExpr\n");  }
 | T_NewArray '(' Expr ',' Type ')' { fprintf(yyout,"newarryExpr\n");  }
 | LValue T_SingleEqual Expr { fprintf(yyout,"Equal Expr\n");  }
+
 ;
 
 Call:
-  T_Identifier T_Pl Actuals T_Pr { fprintf(yyout,"Call");  }
+  T_Identifier T_Pl Actuals T_Pr  { fprintf(yyout,"Call");  }
+| T_Call T_Pl  T_Pr  { fprintf(yyout,"Call");  }
 | Expr '.' T_Identifier '(' Actuals ')' {fprintf(yyout,"Call");  }
 ;
 
