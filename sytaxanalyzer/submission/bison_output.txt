@@ -25,22 +25,40 @@ int
 Variable
  VarDecl
 Var_FieldList
+IExprT_IntConstant   ConstantExpr
 Equal Expr
-Statement_FieldList
+OptExprOptExpr ;Statement_FieldList
+IExprT_IntConstant   ConstantExpr
 Equal Expr
-Statement_FieldList
+OptExprOptExpr ;Statement_FieldList
+IExprT_IntConstant   ConstantExpr
 Equal Expr
-Statement_FieldList
-LValue Expr
+OptExprOptExpr ;Statement_FieldList
+IExprLValue Expr
+T_IntConstant   ConstantExpr
+SExprT_IntConstant   ConstantExpr
 Equal Expr
-Statement_FieldList
-LValue Expr
+OptExprOptExpr ;Statement_FieldList
+IExprLValue Expr
+T_IntConstant   ConstantExpr
+T_IntConstant   ConstantExpr
++Expr
+SExprT_IntConstant   ConstantExpr
 Equal Expr
-Statement_FieldList
+OptExprOptExpr ;Statement_FieldList
+IExprT_IntConstant   ConstantExpr
+T_IntConstant   ConstantExpr
++Expr
+T_IntConstant   ConstantExpr
+T_IntConstant   ConstantExpr
+/Expr
+T_IntConstant   ConstantExpr
+*Expr
+-Expr
 Equal Expr
-Statement_FieldList
-LValue Expr
-LValue Expr
+OptExprOptExpr ;Statement_FieldList
+IExprLValue Expr
+T_IntConstant   ConstantExpr
+SExprIExprLValue Expr
 Equal Expr
-Statement_FieldList
-""LValue Expr
+OptExprOptExpr ;Statement_FieldList

@@ -84,7 +84,7 @@ extern int yydebug;
     T_Decr = 294,
     CLASS = 295,
     PROGRAM = 296,
-    CALLOUT = 297,
+    T_Call = 297,
     VOID = 298,
     TRUE = 299,
     FALSE = 300,
