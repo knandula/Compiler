@@ -1,7 +1,47 @@
-INT VARIABLE DECLARED. ID= A
-INT VARIABLE DECLARED. ID= B SIZE =10
-BOOLEAN VARIABLE DECLARED. ID= C
-BOOLEAN VARIABLE DECLARED. ID= D SIZE =10
-INT VARIABLE DECLARED. ID= E
-INT VARIABLE DECLARED. ID= F
-INT VARIABLE DECLARED. ID= G
+Empty
+int
+Variable
+ VarDecl
+T_VarDecl
+int
+Variable
+ VarDecl with size
+Var_FieldList
+boolVariable
+ VarDecl
+Var_FieldList
+boolVariable
+ VarDecl with size
+Var_FieldList
+int
+Variable
+ VarDecl
+Var_FieldList
+int
+Variable
+ VarDecl
+Var_FieldList
+int
+Variable
+ VarDecl
+Var_FieldList
+Equal Expr
+Statement_FieldList
+Equal Expr
+Statement_FieldList
+Equal Expr
+Statement_FieldList
+LValue Expr
+Equal Expr
+Statement_FieldList
+LValue Expr
+Equal Expr
+Statement_FieldList
+Equal Expr
+Statement_FieldList
+LValue Expr
+LValue Expr
+Equal Expr
+Statement_FieldList
+classDeclClass Decl
+PROGRAM ENCOUNTERED

@@ -45,41 +45,84 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    CLASS = 258,
-    PROGRAM = 259,
-    CALLOUT = 260,
-    VOID = 261,
-    TRUE = 262,
-    FALSE = 263,
-    DECIMAL = 264,
-    END = 265,
-    ENDL = 266,
-    TCASSIGNMENT = 267,
-    TCEQ = 268,
-    TCNE = 269,
-    TCLT = 270,
-    TCLE = 271,
-    TCGT = 272,
-    TCGE = 273,
-    TCLP = 274,
-    TCRP = 275,
-    TCLB = 276,
-    TCRB = 277,
-    TCSRB = 278,
-    TCSLB = 279,
-    TCOMMA = 280,
-    TCDOT = 281,
-    ADDITION = 282,
-    SUBTRACTION = 283,
-    MULTIPLICATION = 284,
-    DIVISION = 285,
-    INT = 286,
-    NUMBER = 287,
-    DOUBLE = 288,
-    STRING = 289,
-    IDENTI = 290,
-    BOOLEAN = 291,
-    TCSEMICOLON = 292
+    T_Void = 258,
+    T_Bool = 259,
+    T_Int = 260,
+    T_Double = 261,
+    T_String = 262,
+    T_Class = 263,
+    T_LessEqual = 264,
+    T_GreaterEqual = 265,
+    T_Equal = 266,
+    T_NotEqual = 267,
+    T_Dims = 268,
+    T_SingleEqual = 269,
+    T_LeftShift = 270,
+    T_RightShift = 271,
+    T_And = 272,
+    T_Or = 273,
+    T_Null = 274,
+    T_Extends = 275,
+    T_This = 276,
+    T_Interface = 277,
+    T_Implements = 278,
+    T_While = 279,
+    T_For = 280,
+    T_If = 281,
+    T_Else = 282,
+    T_Return = 283,
+    T_Break = 284,
+    T_New = 285,
+    T_NewArray = 286,
+    T_Print = 287,
+    T_ReadInteger = 288,
+    T_ReadLine = 289,
+    T_Switch = 290,
+    T_Case = 291,
+    T_Default = 292,
+    T_Incr = 293,
+    T_Decr = 294,
+    CLASS = 295,
+    PROGRAM = 296,
+    CALLOUT = 297,
+    VOID = 298,
+    TRUE = 299,
+    FALSE = 300,
+    DECIMAL = 301,
+    T_Semicolon = 302,
+    END = 303,
+    ENDL = 304,
+    TCASSIGNMENT = 305,
+    TCEQ = 306,
+    TCNE = 307,
+    TCLT = 308,
+    TCLE = 309,
+    TCGT = 310,
+    TCGE = 311,
+    TCLP = 312,
+    TCRP = 313,
+    TCLB = 314,
+    TCRB = 315,
+    T_Srb = 316,
+    T_Slb = 317,
+    TCOMMA = 318,
+    TCDOT = 319,
+    T_Add = 320,
+    T_Sub = 321,
+    T_Mul = 322,
+    T_Div = 323,
+    T_Mod = 324,
+    T_Identifier = 325,
+    T_StringConstant = 326,
+    T_IntConstant = 327,
+    T_DoubleConstant = 328,
+    T_BoolConstant = 329,
+    NEG = 330,
+    NOELSE = 331,
+    EMPTYCASE = 332,
+    EMPTYDEFAULT = 333,
+    NONEMPTYCASE = 334,
+    NONEMPTYDEFAULT = 335
   };
 #endif
 
@@ -90,12 +133,14 @@ union YYSTYPE
 {
 #line 18 "bison.y" /* yacc.c:1909  */
 
-	int ival;
-	float fval;
-	char *sval;
-	bool bval;
+  int              integerConstant;
+  bool             boolConstant;
+  char             *stringConstant;
+  double           doubleConstant;
+  char             identifier[32];
+	
 
-#line 99 "bison.tab.h" /* yacc.c:1909  */
+#line 144 "bison.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

@@ -1,7 +1,8 @@
 class Program 
 {
 int A;
-int B[10];boolean C;
+int B[10];
+boolean C;
 boolean D[10];
 int E;
 int F;
@@ -13,5 +14,4 @@ B[1]=8;
 B[2+1]=9;
 A = 5 + 10 - 20 / 10 * 5;
 B[3] = A;
-callout("printf", A);
 }

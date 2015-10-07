@@ -1,0 +1,113 @@
+%{
+#include <cstdio>
+#include <iostream>
+using namespace std;
+
+// stuff from flex that bison needs to know about:
+extern "C" int yylex();
+extern "C" int yyparse();
+extern "C" FILE *yyin;
+extern int line_num;
+ 
+void yyerror(const char *s);
+%}
+
+
+
+%union {
+	int ival;
+	float fval;
+	char *sval;
+}
+
+/* Define our terminal symbols (tokens). This should
+   match our tokens.l lex file. We also define the node type
+   they represent.
+ */
+%token CLASS PROGRAM CALLOUT BOOLEAN TCID INT
+%token  END ENDL
+%token  TCASSIGNMENT TCEQ TCNE TCLT TCLE TCGT TCGE 
+%token  TCLP TCRP TCLB TCRB TCSRB TCSLB TCOMMA TCDOT 
+%token  ADDITION SUBTRACTION MULTIPLICATION DIVISION
+
+/*
+%type <ident> ident
+%type <expr> numeric expr 
+%type <stmt> stmt var_decl */
+
+
+/* Operator precedence for mathematical operators */
+%left ADDITION  SUBTRACTION
+%left MULTIPLICATION  DIVISION
+
+// define the "terminal symbol" token types I'm going to use (in CAPS
+// by convention), and associate each with a field of the union:
+%token <ival> NUMBER
+%token <fval> FLOAT
+%token <sval> ID
+%start program
+%%
+// this is the actual grammar that bison will parse, but for right now it's just
+// something silly to echo to the screen what bison gets from flex.  We'll
+// make a real one shortly:
+
+
+program:CLASS PROGRAM ENDL block     { cout << "PROGRAM ENCOUNTERED" <<  endl; }	
+	;
+
+block : TCLB ENDL TCRB
+      | TCLB stmts TCRB
+       ;
+
+stmts : stmt
+      | stmts stmt
+      ;
+
+stmt  : BOOLEAN TCID { cout << "BOOLEAN ENCOUNTERED" <<  endl; }	
+      | INT TCID     { cout << "INT ENCOUNTERED" <<  endl; }	
+      | TCID
+      | NUMBER
+      ;
+/*
+var_decl : TCID TCID { cout << $1 << " DECLARATION ENCOUNTERED. ID=" << $2 <<  endl; }	
+	 |TCID TCID TCEQ TCSRB INT TCSLB  { cout << $1 << " DECLARATION ENCOUNTERED. ID=" << $2 << " SIZE = " << $5 <<  endl; }	
+	 ;
+
+ident : ID
+      ;
+
+numeric: INT
+       | FLOAT
+       ;
+
+expr : TCID
+     | numeric
+     ;*/
+
+
+%%
+
+int main(int argc,char* argv[]) {
+	
+	// open a file handle to a particular file:
+	FILE *myfile = fopen(argv[1], "r");
+	// make sure it's valid:
+	if (!myfile) {
+		cout << "I can't open file!" << endl;
+		return -1;
+	}
+	// set lex to read from it instead of defaulting to STDIN:
+	yyin = myfile;
+	
+	// parse through the input until there is no more:
+	do {
+		yyparse();
+	} while (!feof(yyin));
+}
+
+void yyerror(const char *s) {
+	cout << "parse error on line " << line_num << "!  Message: " << s << endl;
+	// might as well halt now:
+	exit(-1);
+}
+
