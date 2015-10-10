@@ -1,0 +1,16 @@
+
+
+class Decl : public Node {
+ public:
+  Decl(Identifier *name);
+  friend std::ostream& operator<<(std::ostream& out, Decl *d) {
+    return out << d->id_;
+  }
+  void PrintToStream(std::ostream& out) { out << id_; } 
+  virtual Type* GetType() { return NULL; }
+  char *GetName() { return id_->name(); }
+
+ protected:
+  Identifier* id_;
+};
+

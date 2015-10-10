@@ -8,6 +8,7 @@
 #include <list>
 
 
+
 using namespace std;
 
 extern "C" int yylex();
@@ -32,6 +33,8 @@ void yyerror(const char *s);
   VarDecl          *varDecl;
   ClassDecl        *classDecl;
   List<VarDecl*>   *varDeclList;
+  Type             *type;
+  NamedType        *namedType;
 }
 
 
@@ -77,16 +80,19 @@ void yyerror(const char *s);
 %nonassoc NONEMPTYDEFAULT
 
 
-%type <declList>	   DeclList 
+%type <declList>	   DeclList  FieldList
 %type <decl> 		   Decl
 %type <varDecl>            VarDecl Variable
 %type <classDecl>          ClassDecl
+%type <type>               Type
+%type <namedType>          ClassExtends NamedType
 
 %%
 
 Program:
   DeclList {  
     Program *program = new Program($1);
+    program->Print(0);
   }
 ;
 
@@ -103,12 +109,15 @@ ClassDecl                { $$ = $1;  fprintf(yyout,"Class Decl\n"); }
 ;
 
 VarDecl:
-  Variable T_Semicolon   { fprintf(yyout,"VarDecl\n"); }
- | Variable T_Slb T_IntConstant T_Srb T_Semicolon   { fprintf(yyout,"VarDecl with size\n"); }
+  Variable T_Semicolon   { $$ = $1; fprintf(yyout,"VarDecl\n"); }
+ | Variable T_Slb T_IntConstant T_Srb T_Semicolon   { $$ = $1; fprintf(yyout,"VarDecl with size\n"); }
 ;
 
 Variable:
-  Type T_Identifier {    fprintf(yyout,"Variable\n "); }
+  Type T_Identifier { 
+    Identifier *i = new Identifier(@2, $2) ;
+    $$ = new VarDecl(i, $1);
+   fprintf(yyout,"Variable\n "); }
 ;
 
 Type:
@@ -123,8 +132,16 @@ NamedType:
   T_Identifier {    fprintf(yyout,"NamedType");  }
 ;
 
-ClassDecl:  T_Class T_Identifier ClassExtends ClassImplements TCLB FieldList TCRB { fprintf(yyout,"classDecl");    }
-	 | T_Class T_Identifier ClassExtends ClassImplements TCLB TCRB { fprintf(yyout,"classDecl");}
+ClassDecl:  T_Class T_Identifier ClassExtends ClassImplements TCLB FieldList TCRB { 
+	    Identifier *i = new Identifier(@2, $2);
+	    $$ = new ClassDecl(i, $6); 
+     	    fprintf(yyout,"classDecl");  
+	  }
+	 | T_Class T_Identifier ClassExtends ClassImplements TCLB TCRB { 
+ 	   Identifier *i = new Identifier(@2, $2);
+   	   $$ = new ClassDecl(i,  new List<Decl*>);
+fprintf(yyout,"classDecl");
+}
 ;
 
 ClassExtends:	 

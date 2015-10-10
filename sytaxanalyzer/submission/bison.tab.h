@@ -130,7 +130,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 24 "bison.y" /* yacc.c:1909  */
+#line 25 "bison.y" /* yacc.c:1909  */
 
   int              integerConstant;
   bool             boolConstant;
@@ -142,16 +142,32 @@ union YYSTYPE
   VarDecl          *varDecl;
   ClassDecl        *classDecl;
   List<VarDecl*>   *varDeclList;
+  Type             *type;
+  NamedType        *namedType;
 
-#line 147 "bison.tab.h" /* yacc.c:1909  */
+#line 149 "bison.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
 
+/* Location type.  */
+#if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
+typedef struct YYLTYPE YYLTYPE;
+struct YYLTYPE
+{
+  int first_line;
+  int first_column;
+  int last_line;
+  int last_column;
+};
+# define YYLTYPE_IS_DECLARED 1
+# define YYLTYPE_IS_TRIVIAL 1
+#endif
+
 
 extern YYSTYPE yylval;
-
+extern YYLTYPE yylloc;
 int yyparse (void);
 
 #endif /* !YY_YY_BISON_TAB_H_INCLUDED  */
