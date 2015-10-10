@@ -23,7 +23,7 @@ typedef struct yyltype {
 class Node {
  public:
   Node(yyltype loc);
-  Node();
+  Node(){};
   virtual ~Node() {}
 
   yyltype* location() { return location_; }
@@ -107,11 +107,11 @@ class Error : public Node {
 
 
 
-class Program {
+class Program : public Node {
  public:
   Program(List<Decl*> *declList){};
   const char *GetPrintNameForNode() { return "Program"; }
-  void PrintChildren(int indent_level);
+  void PrintChildren(int indent_level){};
 
 
  protected:
