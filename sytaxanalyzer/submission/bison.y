@@ -29,6 +29,9 @@ void yyerror(const char *s);
   char             identifier[32]; 
   Decl             *decl;
   List<Decl*>      *declList;
+  VarDecl          *varDecl;
+  ClassDecl        *classDecl;
+  List<VarDecl*>   *varDeclList;
 }
 
 
@@ -74,8 +77,10 @@ void yyerror(const char *s);
 %nonassoc NONEMPTYDEFAULT
 
 
-%type <declList> DeclList 
-%type <decl>  Decl
+%type <declList>	   DeclList 
+%type <decl> 		   Decl
+%type <varDecl>            VarDecl Variable
+%type <classDecl>          ClassDecl
 
 %%
 
@@ -91,10 +96,10 @@ DeclList:
 ;
 
 Decl:
-ClassDecl                { fprintf(yyout,"Class Decl\n"); }
-| VarDecl                { fprintf(yyout,"Var Decl\n"); }
-| InterfaceDecl            { fprintf(yyout,"intf decl\n");}
-| FnDecl                   { fprintf(yyout,"Fn Decl\n");}
+ClassDecl                { $$ = $1;  fprintf(yyout,"Class Decl\n"); }
+| VarDecl                { $$ = $1;  fprintf(yyout,"Var Decl\n"); }
+| InterfaceDecl            {   fprintf(yyout,"intf decl\n");}
+| FnDecl                   {   fprintf(yyout,"Fn Decl\n");}
 ;
 
 VarDecl:

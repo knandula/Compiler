@@ -23,7 +23,7 @@ typedef struct yyltype {
 class Node {
  public:
   Node(yyltype loc);
-  Node();
+  Node(){};
   virtual ~Node() {}
 
   yyltype* location() { return location_; }
@@ -93,10 +93,61 @@ class List {
   }
 };
 
+class Identifier : public Node {
+ public:
+  Identifier(yyltype loc, const char* name){ cout << GetPrintNameForNode() << endl; };
+  const char* GetPrintNameForNode() { return "Identifier"; }
+  void PrintChildren(int indentLevel);
+  friend std::ostream& operator<<(std::ostream& out, Identifier* id) {
+    return out << id->name_;
+  }
+  char* name() { return name_; }
+ protected:
+  char* name_;
+};
+
 class Decl : public Node {
  public:
-  Decl() {};
+  Decl(Identifier *name){ cout << "decl" << endl; };
+  friend std::ostream& operator<<(std::ostream& out, Decl *d) {
+    return out << d->id_;
+  }
+  void PrintToStream(std::ostream& out) { out << id_; }
+  char *GetName() { return id_->name(); }
 
+ protected:
+  Identifier* id_;
+};
+
+
+/*variable and class declaration */
+class VarDecl : public Decl {
+ public:
+  VarDecl(Identifier* name){ cout << GetPrintNameForNode() << endl; };
+  const char* GetPrintNameForNode() {
+    return "VarDecl";
+  }
+  void PrintChildren(int indent_level); 
+};
+
+class ClassDecl : public Decl {
+ public:
+  ClassDecl(Identifier* name, List<Decl*>* members){ cout << GetPrintNameForNode() << endl; };
+  const char* GetPrintNameForNode() {
+    return "ClassDecl";
+  }
+  Identifier* GetIdent() { return id_; } 
+  List<VarDecl*>* GetFields() { return fields_; } 
+  void PrintChildren(int indent_leve);
+  int NumFields() { return num_fields_; }
+  char* GetClassLabel() { return class_label_; }
+
+ protected:
+  List<Decl*>* members_; 
+  ClassDecl* parent_;
+  List<VarDecl*>* fields_;
+  int num_fields_;
+  char *class_label_; 
 };
 
 class Error : public Node {
@@ -104,16 +155,11 @@ class Error : public Node {
   Error() : Node() {}
   const char* GetPrintNameForNode() { return "Error"; } 
 };
-
-
-
 class Program : public Node {
  public:
-  Program(List<Decl*> *declList){};
+  Program(List<Decl*> *declList){ cout << GetPrintNameForNode() << endl; };
   const char *GetPrintNameForNode() { return "Program"; }
   void PrintChildren(int indent_level){};
-
-
  protected:
   List<Decl*> *decls_;
 };

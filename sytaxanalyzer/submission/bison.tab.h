@@ -139,8 +139,11 @@ union YYSTYPE
   char             identifier[32]; 
   Decl             *decl;
   List<Decl*>      *declList;
+  VarDecl          *varDecl;
+  ClassDecl        *classDecl;
+  List<VarDecl*>   *varDeclList;
 
-#line 144 "bison.tab.h" /* yacc.c:1909  */
+#line 147 "bison.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
