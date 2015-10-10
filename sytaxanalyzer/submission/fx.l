@@ -1,9 +1,10 @@
 %{
+#include "tree.h"
 #include <cstdio>
 #include <iostream>
 using namespace std;
 #define YY_DECL extern "C" int yylex()
-int line_num = 1;
+extern int line_num;
 
 #include "bison.tab.h"  // to get the token types that we return
 

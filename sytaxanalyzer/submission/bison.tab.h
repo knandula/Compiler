@@ -83,46 +83,45 @@ extern int yydebug;
     T_Incr = 293,
     T_Decr = 294,
     CLASS = 295,
-    PROGRAM = 296,
-    T_Call = 297,
-    VOID = 298,
-    TRUE = 299,
-    FALSE = 300,
-    DECIMAL = 301,
-    T_Semicolon = 302,
-    END = 303,
-    ENDL = 304,
-    TCASSIGNMENT = 305,
-    TCEQ = 306,
-    TCNE = 307,
-    TCLT = 308,
-    TCLE = 309,
-    TCGT = 310,
-    TCGE = 311,
-    T_Pl = 312,
-    T_Pr = 313,
-    TCLB = 314,
-    TCRB = 315,
-    T_Srb = 316,
-    T_Slb = 317,
-    T_Comma = 318,
-    TCDOT = 319,
-    T_Add = 320,
-    T_Sub = 321,
-    T_Mul = 322,
-    T_Div = 323,
-    T_Mod = 324,
-    T_Identifier = 325,
-    T_StringConstant = 326,
-    T_IntConstant = 327,
-    T_DoubleConstant = 328,
-    T_BoolConstant = 329,
-    NEG = 330,
-    NOELSE = 331,
-    EMPTYCASE = 332,
-    EMPTYDEFAULT = 333,
-    NONEMPTYCASE = 334,
-    NONEMPTYDEFAULT = 335
+    T_Call = 296,
+    VOID = 297,
+    TRUE = 298,
+    FALSE = 299,
+    DECIMAL = 300,
+    T_Semicolon = 301,
+    END = 302,
+    ENDL = 303,
+    TCASSIGNMENT = 304,
+    TCEQ = 305,
+    TCNE = 306,
+    TCLT = 307,
+    TCLE = 308,
+    TCGT = 309,
+    TCGE = 310,
+    T_Pl = 311,
+    T_Pr = 312,
+    TCLB = 313,
+    TCRB = 314,
+    T_Srb = 315,
+    T_Slb = 316,
+    T_Comma = 317,
+    TCDOT = 318,
+    T_Add = 319,
+    T_Sub = 320,
+    T_Mul = 321,
+    T_Div = 322,
+    T_Mod = 323,
+    T_Identifier = 324,
+    T_StringConstant = 325,
+    T_IntConstant = 326,
+    T_DoubleConstant = 327,
+    T_BoolConstant = 328,
+    NEG = 329,
+    NOELSE = 330,
+    EMPTYCASE = 331,
+    EMPTYDEFAULT = 332,
+    NONEMPTYCASE = 333,
+    NONEMPTYDEFAULT = 334
   };
 #endif
 
@@ -131,14 +130,15 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 18 "bison.y" /* yacc.c:1909  */
+#line 24 "bison.y" /* yacc.c:1909  */
 
   int              integerConstant;
   bool             boolConstant;
   char             *stringConstant;
   double           doubleConstant;
-  char             identifier[32];
-	
+  char             identifier[32]; 
+  Decl             *decl;
+  List<Decl*>      *declList;
 
 #line 144 "bison.tab.h" /* yacc.c:1909  */
 };

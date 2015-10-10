@@ -566,15 +566,16 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "fx.l"
 #line 2 "fx.l"
+#include "tree.h"
 #include <cstdio>
 #include <iostream>
 using namespace std;
 #define YY_DECL extern "C" int yylex()
-int line_num = 1;
+extern int line_num;
 
 #include "bison.tab.h"  // to get the token types that we return
 
-#line 578 "lex.yy.c"
+#line 579 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -761,9 +762,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 11 "fx.l"
+#line 12 "fx.l"
 
-#line 767 "lex.yy.c"
+#line 768 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -848,296 +849,296 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 12 "fx.l"
+#line 13 "fx.l"
 {  return T_LessEqual;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 13 "fx.l"
+#line 14 "fx.l"
 {  return T_GreaterEqual;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 14 "fx.l"
+#line 15 "fx.l"
 {  return T_Equal;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 15 "fx.l"
+#line 16 "fx.l"
 {  return T_SingleEqual;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 16 "fx.l"
+#line 17 "fx.l"
 {  return T_NotEqual;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 17 "fx.l"
+#line 18 "fx.l"
 {  return T_And;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 18 "fx.l"
+#line 19 "fx.l"
 {  return T_Or;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 19 "fx.l"
+#line 20 "fx.l"
 {  return T_Dims;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 20 "fx.l"
+#line 21 "fx.l"
 {  return T_Incr;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 21 "fx.l"
+#line 22 "fx.l"
 {  return T_Decr;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 22 "fx.l"
+#line 23 "fx.l"
 {  return T_RightShift;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 23 "fx.l"
+#line 24 "fx.l"
 {  return T_LeftShift;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 24 "fx.l"
+#line 25 "fx.l"
 {  return T_Void;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 25 "fx.l"
+#line 26 "fx.l"
 {  return T_Int;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 26 "fx.l"
+#line 27 "fx.l"
 {  return T_Double;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 27 "fx.l"
+#line 28 "fx.l"
 {  return T_Bool;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 28 "fx.l"
+#line 29 "fx.l"
 {  return T_String;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 29 "fx.l"
+#line 30 "fx.l"
 {  return T_Call;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 30 "fx.l"
+#line 31 "fx.l"
 {  return T_Class;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 31 "fx.l"
+#line 32 "fx.l"
 {  return T_Null;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 32 "fx.l"
+#line 33 "fx.l"
 {  return T_While;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 33 "fx.l"
+#line 34 "fx.l"
 {  return T_For;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 34 "fx.l"
+#line 35 "fx.l"
 {  return T_If;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 35 "fx.l"
+#line 36 "fx.l"
 {  return T_Else;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 36 "fx.l"
+#line 37 "fx.l"
 {  return T_Return;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 37 "fx.l"
+#line 38 "fx.l"
 {  return T_Break;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 38 "fx.l"
+#line 39 "fx.l"
 {  return T_Switch;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 39 "fx.l"
+#line 40 "fx.l"
 {  return T_Case;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 40 "fx.l"
+#line 41 "fx.l"
 {  return T_Default;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 41 "fx.l"
+#line 42 "fx.l"
 {  return T_Extends;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 42 "fx.l"
+#line 43 "fx.l"
 {return T_This;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 43 "fx.l"
+#line 44 "fx.l"
 {return T_Implements;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 44 "fx.l"
+#line 45 "fx.l"
 {return T_Interface;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 45 "fx.l"
+#line 46 "fx.l"
 {return T_New;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 46 "fx.l"
+#line 47 "fx.l"
 {return T_NewArray;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 47 "fx.l"
+#line 48 "fx.l"
 {return T_Print;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 48 "fx.l"
+#line 49 "fx.l"
 {return T_ReadInteger;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 49 "fx.l"
+#line 50 "fx.l"
 {return T_ReadLine;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 50 "fx.l"
+#line 51 "fx.l"
 {return T_Pl;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 51 "fx.l"
+#line 52 "fx.l"
 {return T_Pr;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 52 "fx.l"
+#line 53 "fx.l"
 {return T_Slb;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 53 "fx.l"
+#line 54 "fx.l"
 {return T_Srb;}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 54 "fx.l"
+#line 55 "fx.l"
 {return TCLB;}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 55 "fx.l"
+#line 56 "fx.l"
 {return TCRB;}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 56 "fx.l"
+#line 57 "fx.l"
 {return TCDOT;}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 57 "fx.l"
+#line 58 "fx.l"
 {return T_Comma;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 58 "fx.l"
+#line 59 "fx.l"
 {return T_Semicolon;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 59 "fx.l"
+#line 60 "fx.l"
 {return T_Add;}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 60 "fx.l"
+#line 61 "fx.l"
 { return T_Mod; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 61 "fx.l"
+#line 62 "fx.l"
 {return T_Sub;}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 62 "fx.l"
+#line 63 "fx.l"
 {return T_Mul;}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 63 "fx.l"
+#line 64 "fx.l"
 {return T_Div;}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 64 "fx.l"
+#line 65 "fx.l"
 { yylval.doubleConstant = atof(yytext); return T_DoubleConstant; }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 65 "fx.l"
+#line 66 "fx.l"
 { yylval.integerConstant = atoi(yytext); return T_IntConstant; }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 66 "fx.l"
+#line 67 "fx.l"
 { yylval.stringConstant = strdup(yytext);	return T_Identifier;}
 	YY_BREAK
 case 56:
 /* rule 56 can match eol */
 YY_RULE_SETUP
-#line 67 "fx.l"
+#line 68 "fx.l"
 /* ignore end of line */;
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 68 "fx.l"
+#line 69 "fx.l"
 /* ignore whitespace */;
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 70 "fx.l"
+#line 71 "fx.l"
 ECHO;
 	YY_BREAK
-#line 1141 "lex.yy.c"
+#line 1142 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2135,7 +2136,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 70 "fx.l"
+#line 71 "fx.l"
 
 
 

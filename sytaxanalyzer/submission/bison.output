@@ -2,7 +2,6 @@ Terminals unused in grammar
 
    T_Dims
    CLASS
-   PROGRAM
    VOID
    TRUE
    FALSE
@@ -241,128 +240,127 @@ T_Default (292) 66 67
 T_Incr (293) 96
 T_Decr (294) 97
 CLASS (295)
-PROGRAM (296)
-T_Call (297) 107
-VOID (298)
-TRUE (299)
-FALSE (300)
-DECIMAL (301)
-T_Semicolon (302) 8 9 50
-END (303)
-ENDL (304)
-TCASSIGNMENT (305)
-TCEQ (306)
-TCNE (307)
-TCLT (308)
-TCLE (309)
-TCGT (310)
-TCGE (311)
-T_Pl (312) 106 107
-T_Pr (313) 106 107
-TCLB (314) 17 18 42 43 44 45
-TCRB (315) 17 18 42 43 44 45
-T_Srb (316) 9 117
-T_Slb (317) 9 117
-T_Comma (318) 110
-TCDOT (319)
-T_Add (320) 83
-T_Sub (321) 84
-T_Mul (322) 85
-T_Div (323) 86
-T_Mod (324) 87
-T_Identifier (325) 10 16 17 18 19 23 24 25 26 39 106 108 115 116
-T_StringConstant (326) 121
-T_IntConstant (327) 9 65 118
-T_DoubleConstant (328) 119
-T_BoolConstant (329) 120
-NEG (330)
-NOELSE (331)
-EMPTYCASE (332)
-EMPTYDEFAULT (333)
-NONEMPTYCASE (334)
-NONEMPTYDEFAULT (335)
+T_Call (296) 107
+VOID (297)
+TRUE (298)
+FALSE (299)
+DECIMAL (300)
+T_Semicolon (301) 8 9 50
+END (302)
+ENDL (303)
+TCASSIGNMENT (304)
+TCEQ (305)
+TCNE (306)
+TCLT (307)
+TCLE (308)
+TCGT (309)
+TCGE (310)
+T_Pl (311) 106 107
+T_Pr (312) 106 107
+TCLB (313) 17 18 42 43 44 45
+TCRB (314) 17 18 42 43 44 45
+T_Srb (315) 9 117
+T_Slb (316) 9 117
+T_Comma (317) 110
+TCDOT (318)
+T_Add (319) 83
+T_Sub (320) 84
+T_Mul (321) 85
+T_Div (322) 86
+T_Mod (323) 87
+T_Identifier (324) 10 16 17 18 19 23 24 25 26 39 106 108 115 116
+T_StringConstant (325) 121
+T_IntConstant (326) 9 65 118
+T_DoubleConstant (327) 119
+T_BoolConstant (328) 120
+NEG (329)
+NOELSE (330)
+EMPTYCASE (331)
+EMPTYDEFAULT (332)
+NONEMPTYCASE (333)
+NONEMPTYDEFAULT (334)
 
 
 Nonterminals, with rules where they appear
 
-$accept (98)
+$accept (97)
     on left: 0
-Program (99)
+Program (98)
     on left: 1, on right: 0
-DeclList (100)
+DeclList (99)
     on left: 2 3, on right: 1 2
-Decl (101)
+Decl (100)
     on left: 4 5 6 7, on right: 2 3
-VarDecl (102)
+VarDecl (101)
     on left: 8 9, on right: 5 28 31 48 49
-Variable (103)
+Variable (102)
     on left: 10, on right: 8 9 36 37
-Type (104)
+Type (103)
     on left: 11 12 13 14 15, on right: 10 39 104
-NamedType (105)
+NamedType (104)
     on left: 16, on right: 103
-ClassDecl (106)
+ClassDecl (105)
     on left: 17 18, on right: 4
-ClassExtends (107)
+ClassExtends (106)
     on left: 19 20, on right: 17 18
-ClassImplements (108)
+ClassImplements (107)
     on left: 21 22, on right: 17 18
-ImplementsTypeList (109)
+ImplementsTypeList (108)
     on left: 23 24, on right: 21 23
-InterfaceDecl (110)
+InterfaceDecl (109)
     on left: 25 26, on right: 6
-FnDecl (111)
+FnDecl (110)
     on left: 27, on right: 7 29 32
-FieldList (112)
+FieldList (111)
     on left: 28 29 30 31 32 33, on right: 17 28 29 30
-Formals (113)
+Formals (112)
     on left: 34 35, on right: 39
-FormalsList (114)
+FormalsList (113)
     on left: 36 37, on right: 34 37
-Prototype (115)
+Prototype (114)
     on left: 38, on right: 40 41
-FnDef (116)
+FnDef (115)
     on left: 39, on right: 27 38
-PrototypeList (117)
+PrototypeList (116)
     on left: 40 41, on right: 25 40
-StmtBlock (118)
+StmtBlock (117)
     on left: 42 43 44 45, on right: 27 59
-StmtList (119)
+StmtList (118)
     on left: 46 47, on right: 42 44 46 64 66
-VarDeclList (120)
+VarDeclList (119)
     on left: 48 49, on right: 42 43 48
-Stmt (121)
+Stmt (120)
     on left: 50 51 52 53 54 55 56 57 58 59, on right: 30 33 46 47 51
     56 68 69
-OptExpr (122)
+OptExpr (121)
     on left: 60 61, on right: 50 56
-CaseStmtList (123)
+CaseStmtList (122)
     on left: 62 63, on right: 58 62
-CaseStmt (124)
+CaseStmt (123)
     on left: 64 65, on right: 62 63
-DefaultStmt (125)
+DefaultStmt (124)
     on left: 66 67, on right: 58
-IfStmt (126)
+IfStmt (125)
     on left: 68 69, on right: 57
-ExprList (127)
+ExprList (126)
     on left: 70 71, on right: 55 70 113
-Expr (128)
+Expr (127)
     on left: 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89
     90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105, on right:
     51 53 56 58 60 68 69 70 71 75 76 77 78 79 80 81 82 83 84 85 86
     87 88 89 90 91 92 93 94 95 96 97 98 99 104 105 107 108 112 116
     117
-Call (129)
+Call (128)
     on left: 106 107 108, on right: 73
-callout_args (130)
+callout_args (129)
     on left: 109 110, on right: 107 110
-callout_args_sub (131)
+callout_args_sub (130)
     on left: 111 112, on right: 110
-Actuals (132)
+Actuals (131)
     on left: 113 114, on right: 106 108
-LValue (133)
+LValue (132)
     on left: 115 116 117, on right: 72 105
-Constant (134)
+Constant (133)
     on left: 118 119 120 121 122, on right: 74
 
 

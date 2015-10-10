@@ -1,30 +1,39 @@
 %{
+#include "tree.h"
 #include <cstdio>
 #include <iostream>
-using namespace std;
+#include <string>
+#include <stdlib.h>
+#include <map>
+#include <list>
 
+
+using namespace std;
 
 extern "C" int yylex();
 extern "C" int yyparse();
 extern "C" FILE *yyin;
 extern "C" FILE *yyout;
-extern int line_num;
- 
+
+
 void yyerror(const char *s);
 %}
 
-
+%start Program
 
 %union {
   int              integerConstant;
   bool             boolConstant;
   char             *stringConstant;
   double           doubleConstant;
-  char             identifier[32];
-	
+  char             identifier[32]; 
+  Decl             *decl;
+  List<Decl*>      *declList;
 }
 
-%token T_Void T_Bool T_Int T_Double T_String T_Class
+
+
+%token T_Void T_Bool T_Int T_Double T_String T_Class 
 %token T_LessEqual T_GreaterEqual T_Equal T_NotEqual T_Dims T_SingleEqual
 %token T_LeftShift T_RightShift
 %token T_And T_Or T_Null T_Extends T_This T_Interface T_Implements
@@ -32,13 +41,13 @@ void yyerror(const char *s);
 %token T_New T_NewArray T_Print T_ReadInteger T_ReadLine
 %token T_Switch T_Case T_Default T_Incr T_Decr
 
-%token CLASS PROGRAM T_Call  VOID TRUE FALSE DECIMAL T_Semicolon 
+%token CLASS T_Call  VOID TRUE FALSE DECIMAL T_Semicolon 
 %token  END ENDL
 %token  TCASSIGNMENT TCEQ TCNE TCLT TCLE TCGT TCGE 
 %token  T_Pl T_Pr TCLB TCRB T_Srb T_Slb T_Comma TCDOT 
 %token  T_Add T_Sub T_Mul T_Div T_Mod
 
-%token <identifier> T_Identifier
+%token <identifier> T_Identifier 
 %token <stringConstant> T_StringConstant
 %token <integerConstant> T_IntConstant
 %token <doubleConstant> T_DoubleConstant
@@ -64,16 +73,21 @@ void yyerror(const char *s);
 %nonassoc NONEMPTYCASE
 %nonassoc NONEMPTYDEFAULT
 
-%start Program
+
+%type <declList> DeclList 
+%type <decl>  Decl
+
 %%
 
 Program:
-  DeclList { fprintf(yyout, "PROGRAM ENCOUNTERED\n" ); }
+  DeclList {  
+    Program *program = new Program($1);
+  }
 ;
 
 DeclList:
-  DeclList Decl            { fprintf(yyout, "DeclList\n"); }
-| Decl                     {  }
+  DeclList Decl            { ($$ = $1)->Append($2);  fprintf(yyout, "DeclList\n"); }
+| Decl                     { ($$ = new List<Decl*>)->Append($1);  }
 ;
 
 Decl:
@@ -320,7 +334,7 @@ int main(int argc,char* argv[]) {
 }
 
 void yyerror(const char *s) {
-	cout << "parse error on line " << line_num << "!  Message: " << s << endl;
+	cout << "parse error on line " << "!  Message: " << s << endl;
 	// might as well halt now:
 	exit(-1);
 }
