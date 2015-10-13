@@ -80,7 +80,7 @@ void yyerror(const char *s);
 Program:
   DeclList {  
    Program *program = new Program($1);
- program->Print(0);
+   program->Print(0);
   }
 ;
 

@@ -1,0 +1,4 @@
+NoExtends
+NoImpl
+classDeclClass Decl
+Program Encountered
