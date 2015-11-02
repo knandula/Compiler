@@ -1,0 +1,6 @@
+int
+Variable
+ ,, apsVarDecl
+doubleVariable
+ ,, bleepVarDecl
+classDeclClass Decl
