@@ -3,15 +3,18 @@
 #include <list>
 #include <string>
 #include <stdlib.h>
-#include <llvm/value.h>
+#include <llvm/IR/Value.h>
 
 
 using namespace std;
+
+class CodeGenContext;
 
 class Node {
  public:
   Node();  
   void print();
+  virtual llvm::Value* codeGen(CodeGenContext& context) { return NULL;}
   virtual ~Node() {}
 };
 
@@ -23,17 +26,17 @@ class Identifier : public Node {
   const char* name_;
 };
 
-class Type : public Node {
+class DataType : public Node {
  public:
-  static Type *intType, *doubleType, *boolType, *voidType,
+  static DataType *intType, *doubleType, *boolType, *voidType,
               *nullType, *stringType, *errorType;
- Type(const char *str);
+ DataType(const char *str);
  void print();
  protected:
   char *typeName;
 };
 
-class NamedType : public Type {
+class NamedType : public DataType {
  public:
   NamedType(Identifier *i);
  protected:
@@ -61,11 +64,11 @@ class ClassDecl : public Decl {
 
 class VarDecl : public Decl {
  public:
-  VarDecl(Identifier* name, Type* type);
+  VarDecl(Identifier* name, DataType* type);
   void print();
  protected:
    Identifier* vnam;
-   Type* vtype;
+   DataType* vtype;
 };
 
 
@@ -86,12 +89,12 @@ class StmtBlock : public Stmt {
 
 class FnDecl : public Decl {
  public:
-  FnDecl(Identifier *name, Type *return_type, list<VarDecl*> *formals);
+  FnDecl(Identifier *name, DataType *return_type, list<VarDecl*> *formals);
   void SetFunctionBody(Stmt *b); 
   void print();
  protected:
   list<VarDecl*>* formals_;
-  Type* return_type_;
+  DataType* return_type_;
   Stmt* body_;
 };
 
@@ -99,29 +102,29 @@ class Expr : public Stmt {
  public:
   Expr() : Stmt() {}
  protected:
-  Type* ret_type_;
+  DataType* ret_type_;
 };
 
 
 class EmptyExpr : public Expr {
  public:
-  EmptyExpr() { ret_type_ = Type::voidType; }
+  EmptyExpr() { ret_type_ = DataType::voidType; }
 };
 
-class Operator : public Node {
+class Opt : public Node {
  public:
-  Operator(const char* tok);
+  Opt(const char* tok);
  protected:
   char token_string_[4];
 };
 
 class CompoundExpr : public Expr {
  public:
-  CompoundExpr(Expr* lhs, Operator* op, Expr* rhs); 
-  CompoundExpr(Operator* op, Expr* rhs);            
-  CompoundExpr(Expr* lhs, Operator* op);
+  CompoundExpr(Expr* lhs, Opt* op, Expr* rhs); 
+  CompoundExpr(Opt* op, Expr* rhs);            
+  CompoundExpr(Expr* lhs, Opt* op);
  protected:
-  Operator* op_;
+  Opt* op_;
   // left will be NULL if unary
   Expr* left_;
   Expr* right_;
@@ -129,25 +132,25 @@ class CompoundExpr : public Expr {
 
 class LogicalExpr : public CompoundExpr {
  public:
-  LogicalExpr(Expr* lhs, Operator* op, Expr* rhs):CompoundExpr(lhs, op, rhs) {}
-  LogicalExpr(Operator* op, Expr* rhs) : CompoundExpr(op,rhs) {}
+  LogicalExpr(Expr* lhs, Opt* op, Expr* rhs):CompoundExpr(lhs, op, rhs) {}
+  LogicalExpr(Opt* op, Expr* rhs) : CompoundExpr(op,rhs) {}
 };
 
 class AssignExpr : public CompoundExpr {
  public:
-  AssignExpr(Expr* lhs, Operator* op, Expr* rhs): CompoundExpr(lhs, op, rhs) {} 
+  AssignExpr(Expr* lhs, Opt* op, Expr* rhs): CompoundExpr(lhs, op, rhs) {} 
 };
 
 class ArithmeticExpr : public CompoundExpr {
  public:
-  ArithmeticExpr(Expr* lhs, Operator* op, Expr* rhs): CompoundExpr(lhs, op, rhs) {}
-  ArithmeticExpr(Operator* op, Expr* rhs) : CompoundExpr(op, rhs) {}
+  ArithmeticExpr(Expr* lhs, Opt* op, Expr* rhs): CompoundExpr(lhs, op, rhs) {}
+  ArithmeticExpr(Opt* op, Expr* rhs) : CompoundExpr(op, rhs) {}
 };
 
 
 class RelationalExpr : public CompoundExpr {
  public:
-  RelationalExpr(Expr* lhs, Operator* op, Expr* rhs):CompoundExpr(lhs, op, rhs) {}
+  RelationalExpr(Expr* lhs, Opt* op, Expr* rhs):CompoundExpr(lhs, op, rhs) {}
 };
 
 
@@ -191,7 +194,7 @@ class StringConstant : public Expr {
 
 class NullConstant: public Expr {
  public:
-  NullConstant() : Expr() { ret_type_ = Type::nullType; }
+  NullConstant() : Expr() { ret_type_ = DataType::nullType; }
 };
 
 
@@ -200,6 +203,7 @@ class pgm : public Node {
   pgm(list<Decl*> *declList);  
   void print();
   void evaluate();
+  llvm::Value* codeGen(CodeGenContext &context);
  protected:
   list<Decl*> *decls;
 };

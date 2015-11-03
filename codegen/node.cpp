@@ -1,17 +1,16 @@
 #include <stdio.h>
 #include <string.h>
-
 #include "node.h"
 using namespace std;
 
 
-Type *Type::intType    = new Type("int");
-Type *Type::doubleType = new Type("double");
-Type *Type::voidType   = new Type("void");
-Type *Type::boolType   = new Type("bool");
-Type *Type::nullType   = new Type("null");
-Type *Type::stringType = new Type("string");
-Type *Type::errorType  = new Type("error");
+DataType *DataType::intType    = new DataType("int");
+DataType *DataType::doubleType = new DataType("double");
+DataType *DataType::voidType   = new DataType("void");
+DataType *DataType::boolType   = new DataType("bool");
+DataType *DataType::nullType   = new DataType("null");
+DataType *DataType::stringType = new DataType("string");
+DataType *DataType::errorType  = new DataType("error");
 
 
 Node::Node() {
@@ -21,7 +20,7 @@ void Node::print(){
 cout << "node" << endl;
 }
 
-Type::Type(const char *n) {
+DataType::DataType(const char *n) {
   typeName = strdup(n);
 }
 
@@ -44,6 +43,7 @@ cout << name_ << endl;
 
 pgm::pgm(list<Decl*> *d) : decls(d){}
 
+
 void pgm::print() {
 cout << "program" << endl;
 }
@@ -57,13 +57,13 @@ void pgm::evaluate(){
  }
 }
 
-void Type::print() {
+void DataType::print() {
 cout << typeName << endl;
 }
 
 ClassDecl::ClassDecl(Identifier *n,list<Decl*> *m) : Decl(n),nam(n),mem(m) {}
 
-VarDecl::VarDecl(Identifier *n, Type *t) : Decl(n),vnam(n),vtype(t) {}
+VarDecl::VarDecl(Identifier *n, DataType *t) : Decl(n),vnam(n),vtype(t) {}
 
 void ClassDecl::print() {
 cout << "class->";
@@ -87,42 +87,49 @@ cout << "datatype->" ;
 }
 
 StmtBlock::StmtBlock(list<VarDecl*> *d, list<Stmt*> *s) {}
-FnDecl::FnDecl(Identifier *n, Type *r, list<VarDecl*> *d) : Decl(n) {}
+FnDecl::FnDecl(Identifier *n, DataType *r, list<VarDecl*> *d) : Decl(n) {}
 void FnDecl::SetFunctionBody(Stmt *b) {}
 void FnDecl::print(){
 cout << "function" << endl;
 }
 
-Operator::Operator(const char* tok) : Node() {
+Opt::Opt(const char* tok) : Node() {
   strncpy(token_string_, tok, sizeof(token_string_));
 }
 
 
-CompoundExpr::CompoundExpr(Expr* l, Operator* o, Expr* r):Expr() {}
-CompoundExpr::CompoundExpr(Operator* o, Expr* r): Expr() {}
-CompoundExpr::CompoundExpr(Expr* l, Operator* o): Expr() {}
+CompoundExpr::CompoundExpr(Expr* l, Opt* o, Expr* r):Expr() {}
+CompoundExpr::CompoundExpr(Opt* o, Expr* r): Expr() {}
+CompoundExpr::CompoundExpr(Expr* l, Opt* o): Expr() {}
 
 Call::Call(Expr *b, Identifier *f, list<Expr*> *a) : Expr() {}
 
 IntConstant::IntConstant(int val) : Expr() {
   value_ = val;
-  ret_type_ = Type::intType;
+  ret_type_ = DataType::intType;
 }
+
+
+
 
 DoubleConstant::DoubleConstant(double val) : Expr() {
   value_ = val;
-  ret_type_ = Type::doubleType;
+  ret_type_ = DataType::doubleType;
 }
+
+
 
 BoolConstant::BoolConstant(bool val) : Expr() {
   value_ = val;
-  ret_type_ = Type::boolType;
+  ret_type_ = DataType::boolType;
 }
 
 StringConstant::StringConstant(const char *val) : Expr() {
   value_ = strdup(val);
-  ret_type_ = Type::stringType;
+  ret_type_ = DataType::stringType;
 }
+
+
 
 
 

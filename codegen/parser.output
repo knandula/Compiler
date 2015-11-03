@@ -42,13 +42,13 @@ Grammar
     7 VarDecl: Variable T_Semicolon
     8        | Variable T_Slb T_IntConstant T_Srb T_Semicolon
 
-    9 Variable: Type T_Identifier
+    9 Variable: DataType T_Identifier
 
-   10 Type: T_Void
-   11     | T_Bool
-   12     | T_Int
-   13     | T_Double
-   14     | T_String
+   10 DataType: T_Void
+   11         | T_Bool
+   12         | T_Int
+   13         | T_Double
+   14         | T_String
 
    15 NamedType: T_Identifier
 
@@ -70,7 +70,7 @@ Grammar
    27 FormalsList: Variable
    28            | FormalsList ',' Variable
 
-   29 FnDef: Type T_Identifier '(' Formals ')'
+   29 FnDef: DataType T_Identifier '(' Formals ')'
 
    30 StmtBlock: TCLB VarDeclList StmtList TCRB
    31          | TCLB VarDeclList TCRB
@@ -262,7 +262,7 @@ VarDecl (92)
     on left: 7 8, on right: 5 19 22 36 37
 Variable (93)
     on left: 9, on right: 7 8 27 28
-Type (94)
+DataType (94)
     on left: 10 11 12 13 14, on right: 9 29
 NamedType (95)
     on left: 15, on right: 81
@@ -328,7 +328,7 @@ State 0
     Decl       go to state 9
     VarDecl    go to state 10
     Variable   go to state 11
-    Type       go to state 12
+    DataType   go to state 12
     ClassDecl  go to state 13
     FnDecl     go to state 14
     FnDef      go to state 15
@@ -336,37 +336,37 @@ State 0
 
 State 1
 
-   10 Type: T_Void .
+   10 DataType: T_Void .
 
-    $default  reduce using rule 10 (Type)
+    $default  reduce using rule 10 (DataType)
 
 
 State 2
 
-   11 Type: T_Bool .
+   11 DataType: T_Bool .
 
-    $default  reduce using rule 11 (Type)
+    $default  reduce using rule 11 (DataType)
 
 
 State 3
 
-   12 Type: T_Int .
+   12 DataType: T_Int .
 
-    $default  reduce using rule 12 (Type)
+    $default  reduce using rule 12 (DataType)
 
 
 State 4
 
-   13 Type: T_Double .
+   13 DataType: T_Double .
 
-    $default  reduce using rule 13 (Type)
+    $default  reduce using rule 13 (DataType)
 
 
 State 5
 
-   14 Type: T_String .
+   14 DataType: T_String .
 
-    $default  reduce using rule 14 (Type)
+    $default  reduce using rule 14 (DataType)
 
 
 State 6
@@ -401,7 +401,7 @@ State 8
     Decl       go to state 18
     VarDecl    go to state 10
     Variable   go to state 11
-    Type       go to state 12
+    DataType   go to state 12
     ClassDecl  go to state 13
     FnDecl     go to state 14
     FnDef      go to state 15
@@ -432,8 +432,8 @@ State 11
 
 State 12
 
-    9 Variable: Type . T_Identifier
-   29 FnDef: Type . T_Identifier '(' Formals ')'
+    9 Variable: DataType . T_Identifier
+   29 FnDef: DataType . T_Identifier '(' Formals ')'
 
     T_Identifier  shift, and go to state 21
 
@@ -499,8 +499,8 @@ State 20
 
 State 21
 
-    9 Variable: Type T_Identifier .
-   29 FnDef: Type T_Identifier . '(' Formals ')'
+    9 Variable: DataType T_Identifier .
+   29 FnDef: DataType T_Identifier . '(' Formals ')'
 
     '('  shift, and go to state 26
 
@@ -545,7 +545,7 @@ State 22
 
     VarDecl      go to state 47
     Variable     go to state 11
-    Type         go to state 48
+    DataType     go to state 48
     StmtBlock    go to state 49
     StmtList     go to state 50
     VarDeclList  go to state 51
@@ -601,7 +601,7 @@ State 24
 
     VarDecl    go to state 60
     Variable   go to state 11
-    Type       go to state 12
+    DataType   go to state 12
     FnDecl     go to state 61
     FieldList  go to state 62
     FnDef      go to state 15
@@ -624,7 +624,7 @@ State 25
 
 State 26
 
-   29 FnDef: Type T_Identifier '(' . Formals ')'
+   29 FnDef: DataType T_Identifier '(' . Formals ')'
 
     T_Void    shift, and go to state 1
     T_Bool    shift, and go to state 2
@@ -635,7 +635,7 @@ State 26
     $default  reduce using rule 26 (Formals)
 
     Variable     go to state 65
-    Type         go to state 48
+    DataType     go to state 48
     Formals      go to state 66
     FormalsList  go to state 67
 
@@ -899,7 +899,7 @@ State 47
 
 State 48
 
-    9 Variable: Type . T_Identifier
+    9 Variable: DataType . T_Identifier
 
     T_Identifier  shift, and go to state 84
 
@@ -987,7 +987,7 @@ State 51
 
     VarDecl    go to state 88
     Variable   go to state 11
-    Type       go to state 48
+    DataType   go to state 48
     StmtBlock  go to state 49
     StmtList   go to state 89
     Stmt       go to state 52
@@ -1156,7 +1156,7 @@ State 62
 
     VarDecl    go to state 115
     Variable   go to state 11
-    Type       go to state 12
+    DataType   go to state 12
     FnDecl     go to state 116
     FnDef      go to state 15
     StmtBlock  go to state 49
@@ -1192,7 +1192,7 @@ State 65
 
 State 66
 
-   29 FnDef: Type T_Identifier '(' Formals . ')'
+   29 FnDef: DataType T_Identifier '(' Formals . ')'
 
     ')'  shift, and go to state 119
 
@@ -1645,7 +1645,7 @@ State 83
 
 State 84
 
-    9 Variable: Type T_Identifier .
+    9 Variable: DataType T_Identifier .
 
     $default  reduce using rule 9 (Variable)
 
@@ -2263,7 +2263,7 @@ State 118
 
 State 119
 
-   29 FnDef: Type T_Identifier '(' Formals ')' .
+   29 FnDef: DataType T_Identifier '(' Formals ')' .
 
     $default  reduce using rule 29 (FnDef)
 
@@ -2279,7 +2279,7 @@ State 120
     T_String  shift, and go to state 5
 
     Variable  go to state 154
-    Type      go to state 48
+    DataType  go to state 48
 
 
 State 121

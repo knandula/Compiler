@@ -1,6 +1,10 @@
 %{
-#include "node.h"
+#include <iostream>
 #include <cstdio>
+#include "node.h"
+#include "codegen.h"
+
+
 using namespace std;
 
 pgm *root;
@@ -23,7 +27,7 @@ void yyerror(const char *s);
   Decl             *decl;
   ClassDecl        *classDecl;  
   VarDecl          *varDecl ;
-  Type             *type;
+  DataType          *type;
   FnDecl           *fnDecl;
   NamedType        *namedType;
   pgm	 	   *prog;
@@ -80,7 +84,7 @@ void yyerror(const char *s);
 %type <varDecl>            VarDecl Variable
 %type <decl>               Decl
 %type <prog>		   Program
-%type <type>               Type
+%type <type>               DataType
 %type <namedType>          NamedType
 %type <fnDecl>             FnDecl  FnDef
 %type <stmtBlock>          StmtBlock
@@ -114,18 +118,18 @@ VarDecl:
 ;
 
 Variable:
-  Type T_Identifier {fprintf(yyout,"Variable\n ,, %s",$2);
+  DataType T_Identifier {fprintf(yyout,"Variable\n ,, %s",$2);
 	 Identifier *i = new Identifier($2) ;
          $$ = new VarDecl(i, $1);
  }
 ;
 
-Type:
-  T_Void                   {  fprintf(yyout,"void"); $$ = Type::voidType;   }
-| T_Bool                   {  fprintf(yyout,"bool"); $$ = Type::boolType; }
-| T_Int                    {  fprintf(yyout,"int\n"); $$ = Type::intType; }
-| T_Double                 {  fprintf(yyout,"double"); $$ = Type::doubleType; }
-| T_String                 { fprintf(yyout,"string"); $$ = Type::stringType;  }
+DataType:
+  T_Void                   {  fprintf(yyout,"void"); $$ = DataType::voidType;   }
+| T_Bool                   {  fprintf(yyout,"bool"); $$ = DataType::boolType; }
+| T_Int                    {  fprintf(yyout,"int\n"); $$ = DataType::intType; }
+| T_Double                 {  fprintf(yyout,"double"); $$ = DataType::doubleType; }
+| T_String                 { fprintf(yyout,"string"); $$ = DataType::stringType;  }
 ;
 
 NamedType:
@@ -173,7 +177,7 @@ FormalsList:
 
 
 FnDef:
-Type T_Identifier '(' Formals ')' {  fprintf(yyout,"function\n");  
+DataType T_Identifier '(' Formals ')' {  fprintf(yyout,"function\n");  
  	Identifier *i = new Identifier($2);
         $$ = new FnDecl(i, $1, $4);
 }
@@ -232,49 +236,49 @@ Expr:
 | Call                     { fprintf(yyout,"Call\n");$$ = $1;  }
 | Constant                 { fprintf(yyout,"Constant\n");$$ = $1;  }
 | Expr T_Or Expr	   { fprintf(yyout,"||\n"); 
-    Operator *op = new Operator("||");
+    Opt *op = new Opt("||");
     $$ = new LogicalExpr($1, op, $3);
  }
 | Expr T_And Expr 	   { fprintf(yyout,"&&\n");
-    Operator *op = new Operator("&&");
+    Opt *op = new Opt("&&");
     $$ = new LogicalExpr($1, op, $3);
   }
 | Expr '<' Expr		   { fprintf(yyout,"<\n");
-  Operator *op = new Operator("<");
+  Opt *op = new Opt("<");
     $$ = new RelationalExpr($1, op, $3);
   }
 | Expr '>' Expr		   { fprintf(yyout,">\n");  
-  Operator *op = new Operator(">");
+  Opt *op = new Opt(">");
     $$ = new RelationalExpr($1, op, $3);
 }
 | Expr T_GreaterEqual Expr { fprintf(yyout,">=\n"); 
-    Operator *op = new Operator(">=");
+    Opt *op = new Opt(">=");
     $$ = new RelationalExpr($1, op, $3);
  }
 | Expr T_LessEqual Expr    { fprintf(yyout,"<=\n");
-   Operator *op = new Operator("<=");
+   Opt *op = new Opt("<=");
     $$ = new RelationalExpr($1, op, $3);
   }
 | Expr T_Equal Expr        { fprintf(yyout,"=\n");  }
 | Expr T_NotEqual Expr     { fprintf(yyout,"!=\n");  }
 | Expr T_Add Expr          { fprintf(yyout,"+\n"); 
-     Operator *op = new Operator("+");
+     Opt *op = new Opt("+");
      $$ = new ArithmeticExpr($1, op, $3);
  }
 | Expr T_Sub Expr 	   { fprintf(yyout,"-\n"); 
-     Operator *op = new Operator("-");
+     Opt *op = new Opt("-");
      $$ = new ArithmeticExpr($1, op, $3);
  }
 | Expr T_Mul Expr 	   { fprintf(yyout,"*\n"); 
-     Operator *op = new Operator("*");
+     Opt *op = new Opt("*");
      $$ = new ArithmeticExpr($1, op, $3);
  }
 | Expr T_Div Expr	   { fprintf(yyout,"/\n");  
-     Operator *op = new Operator("/");
+     Opt *op = new Opt("/");
      $$ = new ArithmeticExpr($1, op, $3);
 }
 | Expr T_Mod Expr	   { fprintf(yyout,"Mod\n");  
-     Operator *op = new Operator("%");
+     Opt *op = new Opt("%");
      $$ = new ArithmeticExpr($1, op, $3);
 }
 | Expr '^' Expr 	   { fprintf(yyout,"^\n");  }
@@ -284,7 +288,7 @@ Expr:
 | Expr T_RightShift Expr   { fprintf(yyout,"RSr\n");  }
 | '-' Expr %prec NEG       { fprintf(yyout,"-\n");  }
 | '!' Expr 		   { fprintf(yyout,"!\n"); 
-    Operator *op = new Operator("!");
+    Opt *op = new Opt("!");
     $$ = new LogicalExpr(op, $2);
  }
 | '~' Expr		   { fprintf(yyout,"~\n");  }
@@ -294,10 +298,9 @@ Expr:
 | '"' Expr '"'             { fprintf(yyout,"FExpr\n");  }
 | T_New NamedType          { fprintf(yyout,"newarrayExpr\n");  }
 | LValue T_SingleEqual Expr { fprintf(yyout,"=Expr\n"); 
-    Operator *op = new Operator("=");
+    Opt *op = new Opt("=");
     $$ = new AssignExpr($1, op, $3);
  }
-
 ;
 
 Call:
@@ -355,6 +358,11 @@ int main(int argc,char* argv[]) {
 	do {
 		yyparse();	    
 	} while (!feof(yyin));
+	
+	CodeGenContext context;
+        context.gencode(*root);
+	
+
 	fclose(yyout);
 }
 

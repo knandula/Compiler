@@ -124,7 +124,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 16 "parser.y" /* yacc.c:1909  */
+#line 20 "parser.y" /* yacc.c:1909  */
 
   int              integerConstant;
   bool             boolConstant;
@@ -135,7 +135,7 @@ union YYSTYPE
   Decl             *decl;
   ClassDecl        *classDecl;  
   VarDecl          *varDecl ;
-  Type             *type;
+  DataType          *type;
   FnDecl           *fnDecl;
   NamedType        *namedType;
   pgm	 	   *prog;
