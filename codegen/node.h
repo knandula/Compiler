@@ -22,7 +22,7 @@ class Identifier : public Node {
  public:
   Identifier(const char* name);  
   void print();
- protected:
+ virtual llvm::Value* codeGen(CodeGenContext &context);
   const char* name_;
 };
 
@@ -32,8 +32,7 @@ class DataType : public Node {
               *nullType, *stringType, *errorType;
  DataType(const char *str);
  void print();
- protected:
-  char *typeName;
+ char *typeName;
 };
 
 class NamedType : public DataType {
@@ -48,6 +47,7 @@ class Decl : public Node {
   Decl(Identifier *name);  
   virtual void print();
   virtual void evaluate();
+ virtual llvm::Value* codeGen(CodeGenContext &context);
  protected:
   Identifier* id;
 };
@@ -57,6 +57,7 @@ class ClassDecl : public Decl {
   ClassDecl(Identifier* name,list<Decl*>* members);   
   void print();
   void evaluate();
+ virtual llvm::Value* codeGen(CodeGenContext &context);
  protected:
   list<Decl*>* mem;
   Identifier* nam;
@@ -66,6 +67,7 @@ class VarDecl : public Decl {
  public:
   VarDecl(Identifier* name, DataType* type);
   void print();
+ virtual llvm::Value* codeGen(CodeGenContext &context);
  protected:
    Identifier* vnam;
    DataType* vtype;
@@ -167,6 +169,7 @@ class Call : public Expr {
 class IntConstant : public Expr {
  public:
   IntConstant(int val);
+ virtual llvm::Value* codeGen(CodeGenContext &context);
  protected:
   int value_;
 };
@@ -174,6 +177,7 @@ class IntConstant : public Expr {
 class DoubleConstant : public Expr {
  public:
   DoubleConstant(double val);
+ virtual llvm::Value* codeGen(CodeGenContext &context);
  protected:
   double value_;
 };
@@ -181,6 +185,7 @@ class DoubleConstant : public Expr {
 class BoolConstant : public Expr {
  public:
   BoolConstant(bool val);
+ virtual llvm::Value* codeGen(CodeGenContext &context);
  protected:
   bool value_;
 };
@@ -188,6 +193,7 @@ class BoolConstant : public Expr {
 class StringConstant : public Expr {
  public:
   StringConstant(const char *val);
+ virtual llvm::Value* codeGen(CodeGenContext &context);
  protected:
   char* value_;
 };
@@ -203,7 +209,7 @@ class pgm : public Node {
   pgm(list<Decl*> *declList);  
   void print();
   void evaluate();
-  llvm::Value* codeGen(CodeGenContext &context);
+ virtual llvm::Value* codeGen(CodeGenContext &context);
  protected:
   list<Decl*> *decls;
 };
